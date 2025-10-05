@@ -5,10 +5,28 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from '@/components/ui/carousel';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { ArrowRight, Star, Feather, Zap, Cookie, Contrast, LayoutGrid, Search, Menu, Mic, Flame, ChevronDown, ChevronUp } from 'lucide-react';
+import { ArrowUp, ArrowRight, Star, Feather, Zap, Cookie, Contrast, LayoutGrid, Search, Menu, Mic, Flame, ChevronDown, ChevronUp } from 'lucide-react';
 import Image from 'next/image';
 
 export default function LandingPage() {
+  const footerLinks = {
+    Assuntos: [
+      'Noticias', 'Notícias para os estados', 'Saúde de A a Z', 'Agência Saúde', 'Balanço 2024', 'COP30', 'Covid-19', 'G20 Brasil', 'Meu SUS Digital', 'Novo PAC Saúde', 'Protocolos Clínicos e Diretrizes Terapêuticas - PCDT', 'Retomada de obras da saúde', 'Saúde com Ciência', 'Saúde Brasil', 'Saúde sem Racismo', 'Yanomami'
+    ],
+    Vacinação: [
+      'Calendário de Vacinação', 'Calendário Técnico Nacional de Vacinação', 'Atividades de vacinação de alta qualidade', 'Distribuição de Imunobiológicos', 'Segurança das Vacinas', 'Vacinas para Grupos Especiais', 'Vacinação para os Viajantes', 'Rede de Frio', 'Informes Técnicos', 'Notas Técnicas e Informativas', 'Manuais', 'Legislação', 'Publicações', 'Monitoramento dos dados de vacinação'
+    ],
+    Composição: [
+      'Organograma', 'Quem é Quem', 'Ministro', 'Secretaria Executiva', 'Consultoria Jurídica', 'DenaSUS', 'Atenção Especializada à Saúde', 'Atenção Primária', 'Ciência e Tecnologia em Saúde', 'Vigilância em Saúde e Ambiente', 'Trabalho e Educação na Saúde', 'Saúde Indígena', 'Informação e Saúde Digital', 'Corregedoria', 'Órgãos Colegiados', 'Entidades Vinculadas'
+    ],
+    'Acesso à Informação': [
+      'Institucional', 'Ações e Programas', 'Agenda de Autoridades', 'Auditorias', 'Banco de Preços', 'Concursos e Seleções', 'Convênios e Transferências', 'Corregedoria', 'Dados abertos', 'Estágio', 'Gestão do SUS', 'Governança Pública', 'Informações Classificadas', 'Lei Geral de Proteção de Dados Pessoais (LGPD)', 'Licitações e Contratos', 'Participação Social', 'Perguntas Frequentes (FAQ)', 'Receitas e Despesas', 'Serviço de Informação ao Cidadão (SIC)', 'Servidores'
+    ],
+    'Centrais de Conteúdo': [
+      'Áudios', 'Apresentações', 'Imagens', 'Manual de Marcas do Ministério da Saúde', 'Publicações MS', 'Uso da Marca do Ministério da Saúde', 'Videos'
+    ]
+  };
+
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -136,7 +154,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="w-full py-12 md:py-16">
+        <section className="w-full py-6 md:py-8">
           <div className="container px-4 md:px-6">
             <Image
               src="https://www.gov.br/saude/pt-br/pagina-inicial/@@govbr.institucional.banner/c4abc7ea-5f67-44fc-bee4-4c15839c28b5/@@images/fe323264-4a33-4f94-a98f-657f4ca92a39.png"
@@ -148,7 +166,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="w-full py-8 md:py-10">
+        <section className="w-full py-6 md:py-8">
           <div className="container px-4 md:px-6 relative">
             <Carousel className="w-full max-w-4xl mx-auto">
               <CarouselContent>
@@ -209,7 +227,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="w-full py-8 md:py-10">
+        <section className="w-full py-6 md:py-8">
           <div className="container flex justify-center px-4 md:px-6">
             <Button size="lg" className="bg-green-600 text-lg font-bold text-white hover:bg-green-700">
               Adquira já seu canudo gratuitamente
@@ -217,7 +235,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section id="features" className="w-full py-12 md:py-16 bg-muted">
+        <section id="features" className="w-full py-6 md:py-8 bg-muted">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
               <div className="space-y-2">
@@ -261,16 +279,30 @@ export default function LandingPage() {
         </section>
       </main>
 
-      <footer className="flex flex-col gap-2 sm:flex-row py-6 w-full shrink-0 items-center px-4 md:px-6 border-t">
-        <p className="text-xs text-muted-foreground">&copy; 2024 BlankSlate. All rights reserved.</p>
-        <nav className="sm:ml-auto flex gap-4 sm:gap-6">
-          <a href="#" className="text-xs hover:underline underline-offset-4">
-            Terms of Service
-          </a>
-          <a href="#" className="text-xs hover:underline underline-offset-4">
-            Privacy
-          </a>
-        </nav>
+      <footer className="w-full bg-[#002a54] text-white py-12">
+        <div className="container mx-auto px-4 md:px-6 relative">
+          <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
+            <div>
+              <Image src="https://www.gov.br/pt-br/redes-sociais/apple-touch-icon.png" width={48} height={48} alt="gov.br" className="bg-white p-1 rounded-md mb-4" />
+              <h3 className="font-bold mb-2">SUS</h3>
+            </div>
+            {Object.entries(footerLinks).map(([title, links]) => (
+              <div key={title}>
+                <h3 className="font-bold mb-4 uppercase text-sm tracking-wider">{title}</h3>
+                <ul className="space-y-2">
+                  {links.map((link) => (
+                    <li key={link}>
+                      <a href="#" className="text-sm hover:underline">{link}</a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <button className="absolute bottom-4 right-4 bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg">
+            <ArrowUp className="h-6 w-6" />
+          </button>
+        </div>
       </footer>
     </div>
   );
