@@ -10,8 +10,12 @@ export default function LandingPage() {
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 items-center">
           <div className="mr-4 flex items-center">
-            <Feather className="h-6 w-6 mr-2" />
-            <span className="font-bold">BlankSlate</span>
+            <Image
+              src="https://barra.sistema.gov.br/v1/assets/govbr.webp"
+              width="108"
+              height="29"
+              alt="Gov.br Logo"
+            />
           </div>
           <nav className="flex items-center gap-4 text-sm lg:gap-6 ml-auto">
             <Button variant="ghost">Features</Button>
