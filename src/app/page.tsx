@@ -39,16 +39,16 @@ export default function LandingPage() {
                 height="29"
                 alt="Gov.br Logo"
               />
-              <span className="text-sm font-semibold text-gray-600">Governo Federal</span>
+              <span className="text-sm font-semibold text-gray-600 hidden sm:inline">Governo Federal</span>
             </a>
           </div>
-          <nav className="flex items-center gap-4 text-sm lg:gap-6 ml-auto">
+          <nav className="hidden md:flex items-center gap-4 text-sm lg:gap-6 ml-auto">
             <Button variant="link" className="text-gray-600">Órgãos do Governo</Button>
             <Button variant="link" className="text-gray-600">Acesso à Informação</Button>
             <Button variant="link" className="text-gray-600">Legislação</Button>
             <Button variant="link" className="text-gray-600">Acessibilidade</Button>
           </nav>
-          <div className="flex items-center gap-2 ml-4">
+          <div className="flex items-center gap-2 ml-auto md:ml-4">
             <div className="h-6 w-px bg-gray-300"></div>
             <Button variant="ghost" size="icon">
               <Cookie className="h-5 w-5" />
@@ -83,10 +83,10 @@ export default function LandingPage() {
                   </div>
                 </div>
               </div>
-              <div className="flex items-center justify-center gap-4 flex-wrap">
+              <div className="flex flex-col sm:flex-row items-center justify-center gap-4 flex-wrap">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="flex items-center gap-2 group">
+                    <Button variant="outline" className="flex items-center gap-2 group w-full sm:w-auto">
                       <Flame className="h-5 w-5 text-orange-500" />
                       <span>Serviços mais acessados do govbr</span>
                       <ChevronDown className="h-4 w-4 group-data-[state=open]:hidden" />
@@ -122,14 +122,14 @@ export default function LandingPage() {
                 </DropdownMenu>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="flex items-center gap-2 group">
+                    <Button variant="outline" className="flex items-center gap-2 group w-full sm:w-auto">
                       <Star className="h-5 w-5 text-yellow-500" />
                       <span>Serviços em destaque do govbr</span>
                       <ChevronDown className="h-4 w-4 group-data-[state=open]:hidden" />
                       <ChevronUp className="h-4 w-4 hidden group-data-[state=open]:block" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="w-[400px]">
+                  <DropdownMenuContent className="w-[300px] sm:w-[400px]">
                     <DropdownMenuLabel className="text-gray-500">Para o cidadão</DropdownMenuLabel>
                     <DropdownMenuItem>Concurso Público Nacional Unificado 2 (CPNU2)</DropdownMenuItem>
                     <DropdownMenuSeparator />
@@ -161,7 +161,7 @@ export default function LandingPage() {
               width="1280"
               height="320"
               alt="Banner Principal"
-              className="mx-auto aspect-[4/1] overflow-hidden rounded-xl object-cover"
+              className="mx-auto aspect-video sm:aspect-[4/1] overflow-hidden rounded-xl object-cover"
             />
           </div>
         </section>
@@ -221,15 +221,15 @@ export default function LandingPage() {
                   </div>
                 </CarouselItem>
               </CarouselContent>
-              <CarouselPrevious className="left-0 top-1/2 -translate-y-1/2" />
-              <CarouselNext className="right-0 top-1/2 -translate-y-1/2" />
+              <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 z-10 sm:static sm:translate-y-0" />
+              <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 z-10 sm:static sm:translate-y-0" />
             </Carousel>
           </div>
         </section>
 
         <section className="w-full py-6 md:py-8">
           <div className="container flex justify-center px-4 md:px-6">
-            <Button size="lg" className="bg-green-600 text-lg font-bold text-white hover:bg-green-700">
+            <Button size="lg" className="bg-green-600 text-lg font-bold text-white hover:bg-green-700 w-full sm:w-auto">
               Adquira já seu canudo gratuitamente
             </Button>
           </div>
@@ -282,5 +282,3 @@ export default function LandingPage() {
     </div>
   );
 }
-
-    
