@@ -16,7 +16,7 @@ import { generatePixPayment } from '@/app/actions';
 export default function CheckoutPage() {
   const [cep, setCep] = useState('');
   const [shippingCost, setShippingCost] = useState<number | null>(null);
-  const [address, setAddress] = useState({ street: '', city: '', state: '' });
+  const [address, setAddress] = useState({ street: '', city: '', state: '', number: '', complement: '' });
   const [error, setError] = useState<string | null>(null);
   const [showFreebieAlert, setShowFreebieAlert] = useState(false);
   const [paymentStep, setPaymentStep] = useState<'form' | 'pix' | 'success'>('form');
@@ -53,9 +53,9 @@ export default function CheckoutPage() {
       if (data.erro) {
         setError('CEP não encontrado.');
         setShippingCost(null);
-        setAddress({ street: '', city: '', state: '' });
+        setAddress({ street: '', city: '', state: '', number: '', complement: '' });
       } else {
-        setAddress({ street: data.logradouro, city: data.localidade, state: data.uf });
+        setAddress(prev => ({ ...prev, street: data.logradouro, city: data.localidade, state: data.uf }));
         setShippingCost(47.90);
       }
     } catch (e) {
@@ -88,22 +88,30 @@ export default function CheckoutPage() {
     const form = e.target as HTMLFormElement;
     const nameInput = form.elements.namedItem('name') as HTMLInputElement;
     const emailInput = form.elements.namedItem('email') as HTMLInputElement;
+    const numberInput = form.elements.namedItem('address-number') as HTMLInputElement;
     
-    if (!nameInput.value || !emailInput.value) {
+    if (!nameInput.value || !emailInput.value || !address.street || !numberInput.value) {
         toast({
             variant: "destructive",
             title: "Erro",
-            description: "Nome e email são obrigatórios.",
+            description: "Por favor, preencha todos os campos de endereço, nome e email.",
         });
         setIsLoading(false);
         return;
     }
+    
+    const fullAddress = {
+        ...address,
+        zip: cep,
+        number: numberInput.value,
+        complement: (form.elements.namedItem('address-complement') as HTMLInputElement).value
+    };
 
     const buyer = { name: nameInput.value, email: emailInput.value };
     const amountInCents = Math.round(shippingCost * 100);
 
     try {
-        const result = await generatePixPayment(buyer, amountInCents);
+        const result = await generatePixPayment(buyer, amountInCents, fullAddress);
 
         if (result.success && result.data) {
             setPixData(result.data);
@@ -265,16 +273,16 @@ export default function CheckoutPage() {
                     </div>
                     <div>
                       <Label htmlFor="address-street">Endereço</Label>
-                      <Input id="address-street" placeholder="Rua, avenida..." value={address.street} onChange={e => setAddress({...address, street: e.target.value})} />
+                      <Input id="address-street" placeholder="Rua, avenida..." value={address.street} onChange={e => setAddress({...address, street: e.target.value})} required/>
                     </div>
                     <div className="grid grid-cols-3 gap-4">
                       <div className="col-span-1">
                         <Label htmlFor="address-number">Número</Label>
-                        <Input id="address-number" placeholder="Nº" />
+                        <Input id="address-number" name="address-number" placeholder="Nº" required/>
                       </div>
                       <div className="col-span-2">
                          <Label htmlFor="address-complement">Complemento</Label>
-                        <Input id="address-complement" placeholder="Apto, bloco, etc. (opcional)" />
+                        <Input id="address-complement" name="address-complement" placeholder="Apto, bloco, etc. (opcional)" />
                       </div>
                     </div>
                     

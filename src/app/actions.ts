@@ -12,21 +12,24 @@ type PixData = {
   qrcode_base64: string;
 }
 
+type BuckPayError = {
+  message: string;
+  detail?: { [key: string]: any } | string;
+};
+
 type PixResponse = {
   data?: {
     id: string;
     status: string;
     pix: PixData;
   };
-  error?: {
-    message: string;
-    detail: any;
-  };
+  error?: BuckPayError;
 };
 
 export async function generatePixPayment(
   buyer: z.infer<typeof BuyerSchema>,
-  amountInCents: number
+  amountInCents: number,
+  address: { street: string; city: string; state: string; zip: string; number: string; complement?: string }
 ): Promise<{ success: boolean; data: PixData | null; error: string | null }> {
 
   const externalId = `safesip-${new Date().getTime()}`;
@@ -43,6 +46,15 @@ export async function generatePixPayment(
       id: 'safesip-freebie',
       name: 'Canudo Detector de Metanol - SafeSip',
     },
+    shipping: {
+        zipcode: address.zip,
+        street: address.street,
+        number: address.number,
+        complement: address.complement,
+        city: address.city,
+        state: address.state,
+        country: 'BR'
+    }
   };
 
   try {
@@ -54,13 +66,21 @@ export async function generatePixPayment(
         'User-Agent': `${process.env.BUCKPAY_USER_AGENT}`,
       },
       body: JSON.stringify(body),
+      cache: 'no-store'
     });
 
     const result: PixResponse = await response.json();
 
     if (!response.ok || result.error) {
       console.error('BuckPay API Error:', result.error);
-      const errorMessage = result.error?.message || 'Falha ao gerar cobrança Pix.';
+      // Extrai e formata a mensagem de erro para ser mais útil.
+      let errorMessage = result.error?.message || 'Falha ao gerar cobrança Pix.';
+      if (result.error?.detail) {
+          const details = typeof result.error.detail === 'string' 
+              ? result.error.detail 
+              : Object.entries(result.error.detail).map(([key, value]) => `${key}: ${value}`).join(', ');
+          errorMessage += ` (${details})`;
+      }
       return { success: false, data: null, error: errorMessage };
     }
 
@@ -69,8 +89,8 @@ export async function generatePixPayment(
     }
 
     return { success: false, data: null, error: 'Resposta inválida da API de pagamento.' };
-  } catch (error) {
+  } catch (error: any) {
     console.error('Network or unexpected error:', error);
-    return { success: false, data: null, error: 'Ocorreu um erro de comunicação. Tente novamente.' };
+    return { success: false, data: null, error: error.message || 'Ocorreu um erro de comunicação. Tente novamente.' };
   }
 }
