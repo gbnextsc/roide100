@@ -1,6 +1,9 @@
 
+'use client';
+
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
+import { ArrowRight } from 'lucide-react';
 
 export default function BuyPage() {
   return (
@@ -17,10 +20,12 @@ export default function BuyPage() {
           ></iframe>
         </div>
       </div>
-      <div className="mt-8">
+      <div className="mt-8 relative group">
         <Button size="lg" className="text-lg font-bold uppercase text-white" style={{ backgroundColor: '#FF6B00', color: '#FFFFFF' }}>
           garanta já o seu
         </Button>
+        <ArrowRight className="absolute -left-8 top-1/2 -translate-y-1/2 h-6 w-6 text-orange-500 animate-pulse duration-1000" />
+        <ArrowRight className="absolute -right-8 top-1/2 -translate-y-1/2 h-6 w-6 text-orange-500 animate-pulse duration-1000 rotate-180" />
       </div>
       <div className="mt-4">
         <Link href="/" passHref>
