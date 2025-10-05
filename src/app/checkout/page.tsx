@@ -7,10 +7,11 @@ import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Truck, ShoppingCart, Lock, QrCode, Copy, ShieldCheck, Microscope, PackageCheck, Star } from 'lucide-react';
+import { Truck, ShoppingCart, Lock, QrCode, Copy, ShieldCheck, Microscope, PackageCheck, Star, Loader2 } from 'lucide-react';
 import Image from 'next/image';
 import { useToast } from '@/hooks/use-toast';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import { generatePixPayment } from '@/app/actions';
 
 export default function CheckoutPage() {
   const [cep, setCep] = useState('');
@@ -19,9 +20,9 @@ export default function CheckoutPage() {
   const [error, setError] = useState<string | null>(null);
   const [showFreebieAlert, setShowFreebieAlert] = useState(false);
   const [paymentStep, setPaymentStep] = useState<'form' | 'pix' | 'success'>('form');
+  const [pixData, setPixData] = useState<{ code: string; qrcode_base64: string } | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
-
-  const pixCode = '00020126360014br.gov.bcb.pix0114+5511999999999520400005303986540547.905802BR5913NOME DO LOJISTA6009SAO PAULO62070503***6304E2A4';
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -42,6 +43,7 @@ export default function CheckoutPage() {
       return;
     }
     setError(null);
+    setIsLoading(true);
     try {
       const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
       if (!response.ok) {
@@ -59,35 +61,60 @@ export default function CheckoutPage() {
     } catch (e) {
       setError('Ocorreu um erro ao calcular o frete.');
       setShippingCost(null);
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleCopyPixCode = () => {
-    navigator.clipboard.writeText(pixCode);
-    toast({
-      title: 'Código Pix copiado!',
-      description: 'Use o código no seu app de pagamentos.',
-    });
+    if (pixData) {
+      navigator.clipboard.writeText(pixData.code);
+      toast({
+        title: 'Código Pix copiado!',
+        description: 'Use o código no seu app de pagamentos.',
+      });
+    }
   };
   
-  const handlePayment = (e: React.FormEvent) => {
+  const handlePayment = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Basic form validation
+    setIsLoading(true);
+    
     if (!shippingCost) {
         setError("Preencha seu CEP para calcular o frete.");
+        setIsLoading(false);
         return;
     }
     const form = e.target as HTMLFormElement;
-    const name = form.elements.namedItem('name') as HTMLInputElement;
-    if (!name.value) {
+    const nameInput = form.elements.namedItem('name') as HTMLInputElement;
+    const emailInput = form.elements.namedItem('email') as HTMLInputElement;
+    
+    if (!nameInput.value || !emailInput.value) {
         toast({
             variant: "destructive",
             title: "Erro",
-            description: "Nome obrigatório",
+            description: "Nome e email são obrigatórios.",
         });
+        setIsLoading(false);
         return;
     }
-    setPaymentStep('pix');
+
+    const buyer = { name: nameInput.value, email: emailInput.value };
+    const amountInCents = Math.round(shippingCost * 100);
+
+    const result = await generatePixPayment(buyer, amountInCents);
+
+    if (result.success && result.data) {
+        setPixData(result.data);
+        setPaymentStep('pix');
+    } else {
+        toast({
+            variant: "destructive",
+            title: "Erro ao gerar pagamento",
+            description: result.error || "Não foi possível gerar o QR Code do Pix. Tente novamente.",
+        });
+    }
+    setIsLoading(false);
   };
 
   if (paymentStep === 'success') {
@@ -208,18 +235,18 @@ export default function CheckoutPage() {
                   <form onSubmit={handlePayment} className="space-y-6">
                     <div>
                       <Label htmlFor="name">Nome Completo</Label>
-                      <Input id="name" name="name" placeholder="Seu nome completo" />
+                      <Input id="name" name="name" placeholder="Seu nome completo" required />
                     </div>
                     <div>
                       <Label htmlFor="email">Email</Label>
-                      <Input id="email" type="email" placeholder="seu@email.com" />
+                      <Input id="email" type="email" name="email" placeholder="seu@email.com" required />
                     </div>
                      <div>
                       <Label htmlFor="zip">CEP</Label>
                       <div className="flex items-start gap-4">
                         <Input id="zip" placeholder="00000-000" value={cep} onChange={handleCepChange} maxLength={8} />
-                        <Button type="button" onClick={handleCalculateShipping}>
-                          <Truck className="mr-2 h-4 w-4" /> Calcular frete
+                        <Button type="button" onClick={handleCalculateShipping} disabled={isLoading}>
+                          {isLoading && cep.length === 8 ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Truck className="mr-2 h-4 w-4" />} Calcular frete
                         </Button>
                       </div>
                        {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
@@ -242,7 +269,8 @@ export default function CheckoutPage() {
                       </div>
                     </div>
                     
-                    <Button type="submit" size="lg" className="w-full text-lg font-bold text-white" style={{ backgroundColor: '#FF6B00' }}>
+                    <Button type="submit" size="lg" className="w-full text-lg font-bold text-white" style={{ backgroundColor: '#FF6B00' }} disabled={isLoading}>
+                      {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                       Garanta já — Pague só o frete
                     </Button>
                     <p className="text-center text-sm text-muted-foreground">Entrega estimada: 3–7 dias úteis. Pedido sujeito à disponibilidade do lote.</p>
@@ -251,17 +279,18 @@ export default function CheckoutPage() {
                     <div className="flex flex-col items-center gap-4 text-center">
                        <h3 className="text-xl font-bold">Pague com Pix para finalizar</h3>
                        <p className="text-sm text-muted-foreground">Escaneie o QR Code com seu app de pagamentos:</p>
-                        <Image
-                            src="https://picsum.photos/seed/pix-qr-checkout/250/250"
-                            alt="QR Code Pix"
-                            width={250}
-                            height={250}
-                            className="rounded-md border p-1"
-                            data-ai-hint="qr code"
-                        />
+                        {pixData && (
+                            <Image
+                                src={`data:image/png;base64,${pixData.qrcode_base64}`}
+                                alt="QR Code Pix"
+                                width={250}
+                                height={250}
+                                className="rounded-md border p-1"
+                            />
+                        )}
                         <p className="text-sm text-muted-foreground">Ou use o código copia e cola:</p>
                         <div className="w-full flex gap-2">
-                            <Input readOnly value={pixCode} className="text-xs bg-gray-100"/>
+                            <Input readOnly value={pixData?.code || ''} className="text-xs bg-gray-100"/>
                             <Button type="button" size="icon" variant="outline" onClick={handleCopyPixCode}>
                                 <Copy className="h-4 w-4"/>
                             </Button>
