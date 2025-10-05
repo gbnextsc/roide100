@@ -1,9 +1,10 @@
 
+import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 import { Input } from '@/components/ui/input';
-import { ArrowRight, Star, Feather, Zap, Cookie, Contrast, LayoutGrid, Search, Menu, Mic, Flame, ChevronDown } from 'lucide-react';
+import { ArrowRight, Star, Feather, Zap, Cookie, Contrast, LayoutGrid, Search, Menu, Mic, Flame, ChevronDown, ChevronUp } from 'lucide-react';
 import Image from 'next/image';
 
 export default function LandingPage() {
@@ -66,30 +67,67 @@ export default function LandingPage() {
               <div className="flex items-center justify-center gap-4 flex-wrap">
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="flex items-center gap-2">
+                    <Button variant="outline" className="flex items-center gap-2 group">
                       <Flame className="h-5 w-5 text-orange-500" />
                       <span>Serviços mais acessados do govbr</span>
-                      <ChevronDown className="h-4 w-4" />
+                      <ChevronDown className="h-4 w-4 group-data-[state=open]:hidden" />
+                      <ChevronUp className="h-4 w-4 hidden group-data-[state=open]:block" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem>Serviço 1</DropdownMenuItem>
-                    <DropdownMenuItem>Serviço 2</DropdownMenuItem>
-                    <DropdownMenuItem>Serviço 3</DropdownMenuItem>
+                  <DropdownMenuContent className="w-[300px]">
+                    <DropdownMenuItem>
+                      <span className="text-gray-400 w-6 text-center">1</span>
+                      <span>Consultar Meu Imposto de Renda</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <span className="text-gray-400 w-6 text-center">2</span>
+                      <span>Assinatura Eletrônica</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <span className="text-gray-400 w-6 text-center">3</span>
+                      <span>Consultar restituição do imposto de renda</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <span className="text-gray-400 w-6 text-center">4</span>
+                      <span>Entregar Meu Imposto de Renda</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <span className="text-gray-400 w-6 text-center">5</span>
+                      <span>Consultar CPF</span>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <span className="text-gray-400 w-6 text-center">6</span>
+                      <span>Consultar dados do Cadastro Único</span>
+                    </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="flex items-center gap-2">
+                    <Button variant="outline" className="flex items-center gap-2 group">
                       <Star className="h-5 w-5 text-yellow-500" />
                       <span>Serviços em destaque do govbr</span>
-                      <ChevronDown className="h-4 w-4" />
+                      <ChevronDown className="h-4 w-4 group-data-[state=open]:hidden" />
+                      <ChevronUp className="h-4 w-4 hidden group-data-[state=open]:block" />
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent>
-                    <DropdownMenuItem>Destaque 1</DropdownMenuItem>
-                    <DropdownMenuItem>Destaque 2</DropdownMenuItem>
-                    <DropdownMenuItem>Destaque 3</DropdownMenuItem>
+                  <DropdownMenuContent className="w-[400px]">
+                    <DropdownMenuLabel className="text-gray-500">Para o cidadão</DropdownMenuLabel>
+                    <DropdownMenuItem>Concurso Público Nacional Unificado 2 (CPNU2)</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel className="text-gray-500">Imóveis</DropdownMenuLabel>
+                    <DropdownMenuItem className="flex justify-between items-center">
+                      <span>Consultar dados de imóveis rurais na plataforma Meu Imóvel Rural</span>
+                      <Badge variant="secondary" className="bg-green-100 text-green-800">Novo</Badge>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel className="text-gray-500">Crimes</DropdownMenuLabel>
+                    <DropdownMenuItem>Celular Seguro</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel className="text-gray-500">Educação Básica</DropdownMenuLabel>
+                    <DropdownMenuItem>Fazer o Exame Nacional do Ensino Médio (Enem)</DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuLabel className="text-gray-500">Outros Serviços</DropdownMenuLabel>
+                    <DropdownMenuItem>CONTRATA+BRASIL</DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>
               </div>
