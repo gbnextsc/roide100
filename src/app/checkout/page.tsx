@@ -7,8 +7,9 @@ import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Truck, ShoppingCart, Lock } from 'lucide-react';
+import { Truck, ShoppingCart, Lock, QrCode, Copy } from 'lucide-react';
 import Image from 'next/image';
+import { useToast } from '@/hooks/use-toast';
 
 export default function CheckoutPage() {
   const [cep, setCep] = useState('');
@@ -16,6 +17,10 @@ export default function CheckoutPage() {
   const [address, setAddress] = useState({ street: '', city: '', state: '' });
   const [error, setError] = useState<string | null>(null);
   const [showFreebieAlert, setShowFreebieAlert] = useState(false);
+  const [showPix, setShowPix] = useState(false);
+  const { toast } = useToast();
+
+  const pixCode = '00020126360014br.gov.bcb.pix0114+5511999999999520400005303986540510.005802BR5913NOME DO LOJISTA6009SAO PAULO62070503***6304E2A4';
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -58,6 +63,14 @@ export default function CheckoutPage() {
     }
   };
 
+  const handleCopyPixCode = () => {
+    navigator.clipboard.writeText(pixCode);
+    toast({
+      title: 'Código Pix copiado!',
+      description: 'Use o código no seu app de pagamentos.',
+    });
+  };
+
 
   return (
     <div className="flex flex-col lg:flex-row items-center justify-center min-h-screen bg-gray-100 p-4">
@@ -88,7 +101,7 @@ export default function CheckoutPage() {
               {showFreebieAlert && (
                  <div className="mb-6 p-4 bg-green-100 border-l-4 border-green-500 rounded-r-lg animate-in fade-in-50 slide-in-from-left-4 duration-500">
                     <p className="text-green-800 font-semibold">
-                      Parabéns! Você ganhou um SafeSip. Cubra apenas o custo de envio e receba sua segurança em casa.
+                      Parabéns! Você ganhou um SafeSip. Por tempo limitado, cubra apenas o custo de envio e receba sua segurança em casa. Não perca essa chance!
                     </p>
                   </div>
               )}
@@ -161,22 +174,31 @@ export default function CheckoutPage() {
                   <h3 className="text-lg font-semibold mb-4 flex items-center">
                     Pagamento Seguro <Lock className="ml-2 h-4 w-4 text-green-600" />
                   </h3>
-                  <div className="space-y-4">
-                    <div>
-                      <Label htmlFor="card-number">Número do Cartão</Label>
-                      <Input id="card-number" placeholder="0000 0000 0000 0000" />
+                   {!showPix ? (
+                    <Button type="button" onClick={() => setShowPix(true)} className="w-full bg-cyan-500 hover:bg-cyan-600 text-white" size="lg">
+                      <QrCode className="mr-2 h-5 w-5" />
+                      Pagar com Pix
+                    </Button>
+                  ) : (
+                    <div className="p-4 border rounded-lg bg-gray-50 flex flex-col items-center animate-in fade-in-50 duration-500">
+                      <p className="text-sm text-muted-foreground mb-2">Escaneie o QR Code com seu app de pagamentos:</p>
+                      <Image
+                        src="https://picsum.photos/seed/pix-qr/200/200"
+                        alt="QR Code Pix"
+                        width={200}
+                        height={200}
+                        className="rounded-md"
+                        data-ai-hint="qr code"
+                      />
+                       <p className="text-sm text-muted-foreground mt-4 mb-2">Ou use o código copia e cola:</p>
+                       <div className="w-full flex gap-2">
+                          <Input readOnly value={pixCode} className="text-xs bg-gray-100"/>
+                          <Button type="button" size="icon" variant="outline" onClick={handleCopyPixCode}>
+                            <Copy className="h-4 w-4"/>
+                          </Button>
+                       </div>
                     </div>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <Label htmlFor="expiry-date">Data de Validade</Label>
-                        <Input id="expiry-date" placeholder="MM/AA" />
-                      </div>
-                      <div>
-                        <Label htmlFor="cvv">CVV</Label>
-                        <Input id="cvv" placeholder="123" />
-                      </div>
-                    </div>
-                  </div>
+                  )}
                 </div>
 
                 <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white" size="lg">
