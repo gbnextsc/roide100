@@ -283,7 +283,7 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 md:px-6 relative">
           <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
             <div>
-              <Image src="https://www.gov.br/pt-br/redes-sociais/apple-touch-icon.png" width={48} height={48} alt="gov.br" className="bg-white p-1 rounded-md mb-4" />
+              <Image src="https://www.gov.br/pt-br/redes-sociais/govbr-logo-2.png" width={140} height={40} alt="gov.br" className="mb-4" />
               <h3 className="font-bold mb-2">SUS</h3>
             </div>
             {Object.entries(footerLinks).map(([title, links]) => (
