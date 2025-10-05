@@ -149,25 +149,47 @@ export default function LandingPage() {
 
         <section className="w-full py-12 md:py-16">
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col md:flex-row gap-8 items-start">
-              <div className="md:w-1/3">
+            <div className="grid md:grid-cols-2 gap-8 items-start">
+              <div className="flex flex-col gap-4">
                 <Image
                   src="https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2025/10/hungria.png?w=849&h=477&crop=0"
                   width="849"
                   height="477"
                   alt="Cantor Hungria"
-                  className="rounded-lg object-cover"
+                  className="rounded-lg object-cover w-full aspect-video"
                 />
-              </div>
-              <div className="md:w-2/3">
-                <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl mb-4">
+                <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl">
                   Cantor Hungria é internado com suspeita de intoxicação por metanol
                 </h2>
-                <p className="text-muted-foreground mb-4">
+                <p className="text-muted-foreground">
                   Brasília (DF), 5 de outubro de 2025 — O cantor Hungria Hip Hop está internado em Brasília com suspeita de intoxicação por metanol, após consumir bebidas destiladas em um evento em São Paulo. O artista está consciente e realiza tratamento com hemodiálise, seguindo protocolo médico para casos suspeitos.
                 </p>
                 <p className="text-muted-foreground">
                   O Ministério da Saúde instalou uma Sala de Situação Nacional para monitorar os 43 casos suspeitos registrados no país — sendo 39 em São Paulo — e reforça as orientações à população: evitar bebidas de origem duvidosa e procurar atendimento imediato em caso de sintomas como náuseas, visão turva ou confusão mental.
+                </p>
+              </div>
+              <div className="flex flex-col gap-4">
+                <Image
+                  src="https://informaparaiba.com.br/wp-content/uploads/2025/10/unnamed-13-scaled.jpg"
+                  width="1200"
+                  height="675"
+                  alt="Canudos de teste de metanol"
+                  className="rounded-lg object-cover w-full aspect-video"
+                />
+                <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl">
+                  Governo inicia distribuição de canudos de teste de metanol desenvolvidos por cientistas da Paraíba
+                </h2>
+                <p className="text-muted-foreground">
+                  Brasília (DF), 5 de outubro de 2025 — Para reforçar a vigilância contra bebidas adulteradas, o Governo Federal começa a distribuir canudos de teste de metanol, tecnologia desenvolvida por pesquisadores da Paraíba, para uso em postos de fiscalização, bares, eventos e pontos estratégicos de controle.
+                </p>
+                <p className="text-muted-foreground">
+                  O dispositivo permite detectar a presença de metanol em bebidas alcoólicas de forma rápida e com alto índice de precisão, ajudando a identificar riscos e prevenir intoxicações. A ação integra as medidas do Ministério da Saúde e das agências de vigilância sanitária para combate ao surto nacional de casos suspeitos de intoxicação por metanol.
+                </p>
+                <p className="text-muted-foreground">
+                  Os estados e municípios receberão remessas dos canudos de teste juntamente com orientações técnicas sobre uso e monitoramento. A população continua sendo alertada para evitar consumo de bebidas de procedência duvidosa e procurar atendimento médico caso apresente sintomas compatíveis, como náuseas, alterações visuais ou confusão mental.
+                </p>
+                <p className="text-muted-foreground">
+                  Mais detalhes sobre o funcionamento dos canudos e cronograma de distribuição serão divulgados nos próximos dias pela coordenação nacional do programa de vigilância química do Ministério da Saúde.
                 </p>
               </div>
             </div>

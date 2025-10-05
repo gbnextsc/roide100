@@ -46,6 +46,12 @@ const nextConfig: NextConfig = {
         hostname: 'admin.cnnbrasil.com.br',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'informaparaiba.com.br',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
