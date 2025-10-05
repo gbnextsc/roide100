@@ -283,11 +283,18 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 md:px-6 relative">
           <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
             <div>
+              <Image
+                src="https://barra.sistema.gov.br/v1/assets/govbr.webp"
+                width="108"
+                height="29"
+                alt="Gov.br Logo"
+                className="mb-4"
+              />
               <h3 className="font-bold mb-2 text-xl">SUS</h3>
             </div>
             {Object.entries(footerLinks).map(([title, links]) => (
               <div key={title}>
-                <h3 className="font-normal mb-4 text-xl capitalize">{title}</h3>
+                <h3 className="font-normal mb-4 text-xl">{title}</h3>
                 <ul className="space-y-2">
                   {links.map((link) => (
                     <li key={link}>
@@ -306,3 +313,5 @@ export default function LandingPage() {
     </div>
   );
 }
+
+    
