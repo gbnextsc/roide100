@@ -34,6 +34,12 @@ const nextConfig: NextConfig = {
         hostname: 'barra.sistema.gov.br',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.gov.br',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
