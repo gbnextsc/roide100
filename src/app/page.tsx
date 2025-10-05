@@ -147,6 +147,33 @@ export default function LandingPage() {
           </div>
         </section>
 
+        <section className="w-full py-12 md:py-16">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col md:flex-row gap-8 items-start">
+              <div className="md:w-1/3">
+                <Image
+                  src="https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2025/10/hungria.png?w=849&h=477&crop=0"
+                  width="849"
+                  height="477"
+                  alt="Cantor Hungria"
+                  className="rounded-lg object-cover"
+                />
+              </div>
+              <div className="md:w-2/3">
+                <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl mb-4">
+                  Cantor Hungria é internado com suspeita de intoxicação por metanol
+                </h2>
+                <p className="text-muted-foreground mb-4">
+                  Brasília (DF), 5 de outubro de 2025 — O cantor Hungria Hip Hop está internado em Brasília com suspeita de intoxicação por metanol, após consumir bebidas destiladas em um evento em São Paulo. O artista está consciente e realiza tratamento com hemodiálise, seguindo protocolo médico para casos suspeitos.
+                </p>
+                <p className="text-muted-foreground">
+                  O Ministério da Saúde instalou uma Sala de Situação Nacional para monitorar os 43 casos suspeitos registrados no país — sendo 39 em São Paulo — e reforça as orientações à população: evitar bebidas de origem duvidosa e procurar atendimento imediato em caso de sintomas como náuseas, visão turva ou confusão mental.
+                </p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section id="features" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">

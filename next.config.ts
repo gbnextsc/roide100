@@ -40,6 +40,12 @@ const nextConfig: NextConfig = {
         hostname: 'www.gov.br',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'admin.cnnbrasil.com.br',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
