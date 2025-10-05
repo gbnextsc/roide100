@@ -21,7 +21,7 @@ export default function CheckoutPage() {
   const [paymentStep, setPaymentStep] = useState<'form' | 'pix' | 'success'>('form');
   const { toast } = useToast();
 
-  const pixCode = '00020126360014br.gov.bcb.pix0114+551199999999952040000530398654050.005802BR5913NOME DO LOJISTA6009SAO PAULO62070503***6304E2A4';
+  const pixCode = '00020126360014br.gov.bcb.pix0114+5511999999999520400005303986540547.905802BR5913NOME DO LOJISTA6009SAO PAULO62070503***6304E2A4';
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -266,8 +266,8 @@ export default function CheckoutPage() {
                                 <Copy className="h-4 w-4"/>
                             </Button>
                         </div>
-                        <Button onClick={() => setPaymentStep('success')} className="w-full bg-green-600 hover:bg-green-700">Confirmar Pagamento</Button>
-                        <Button variant="link" onClick={() => setPaymentStep('form')}>Voltar</Button>
+                        <Button onClick={() => setPaymentStep('success')} className="w-full bg-green-600 hover:bg-green-700">Já paguei, confirmar pedido</Button>
+                        <Button variant="link" onClick={() => setPaymentStep('form')}>Voltar e editar dados</Button>
                     </div>
                  )}
                 </CardContent>
