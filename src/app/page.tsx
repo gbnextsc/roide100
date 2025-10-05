@@ -1,7 +1,7 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Star, Feather, Zap } from 'lucide-react';
+import { ArrowRight, Star, Feather, Zap, Cookie, Contrast, LayoutGrid, Search } from 'lucide-react';
 import Image from 'next/image';
 
 export default function LandingPage() {
@@ -10,19 +10,34 @@ export default function LandingPage() {
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 items-center">
           <div className="mr-4 flex items-center">
-            <Image
-              src="https://barra.sistema.gov.br/v1/assets/govbr.webp"
-              width="108"
-              height="29"
-              alt="Gov.br Logo"
-            />
+            <a href="https://www.gov.br/pt-br" className="flex items-center gap-2">
+              <Image
+                src="https://barra.sistema.gov.br/v1/assets/govbr.webp"
+                width="108"
+                height="29"
+                alt="Gov.br Logo"
+              />
+              <span className="text-sm font-semibold text-gray-600">Governo Federal</span>
+            </a>
           </div>
           <nav className="flex items-center gap-4 text-sm lg:gap-6 ml-auto">
-            <Button variant="ghost">Features</Button>
-            <Button variant="ghost">Pricing</Button>
-            <Button variant="ghost">About</Button>
-            <Button>Get Started</Button>
+            <Button variant="link" className="text-gray-600">Órgãos do Governo</Button>
+            <Button variant="link" className="text-gray-600">Acesso à Informação</Button>
+            <Button variant="link" className="text-gray-600">Legislação</Button>
+            <Button variant="link" className="text-gray-600">Acessibilidade</Button>
           </nav>
+          <div className="flex items-center gap-2 ml-4">
+            <div className="h-6 w-px bg-gray-300"></div>
+            <Button variant="ghost" size="icon">
+              <Cookie className="h-5 w-5" />
+            </Button>
+            <Button variant="ghost" size="icon">
+              <Contrast className="h-5 w-5" />
+            </Button>
+            <Button variant="ghost" size="icon">
+              <LayoutGrid className="h-5 w-5" />
+            </Button>
+          </div>
         </div>
       </header>
 
