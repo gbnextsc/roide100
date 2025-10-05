@@ -294,7 +294,7 @@ export default function LandingPage() {
             </div>
             {Object.entries(footerLinks).map(([title, links]) => (
               <div key={title}>
-                <h3 className="font-normal mb-4 text-xl">{title}</h3>
+                <h3 className="font-bold mb-4 text-xl">{title}</h3>
                 <ul className="space-y-2">
                   {links.map((link) => (
                     <li key={link}>
@@ -313,5 +313,3 @@ export default function LandingPage() {
     </div>
   );
 }
-
-    
