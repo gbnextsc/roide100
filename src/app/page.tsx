@@ -246,49 +246,6 @@ export default function LandingPage() {
             />
           </div>
         </section>
-
-        <section id="features" className="w-full py-6 md:py-8 bg-muted">
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center justify-center space-y-4 text-center">
-              <div className="space-y-2">
-                <div className="inline-block rounded-lg bg-secondary px-3 py-1 text-sm">Key Features</div>
-                <h2 className="text-3xl font-bold tracking-tighter sm:text-5xl">Everything You Need to Get Started</h2>
-                <p className="max-w-[900px] text-muted-foreground md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-                  Discover the powerful tools and features that make BlankSlate the perfect starting point for your next project.
-                </p>
-              </div>
-            </div>
-            <div className="mx-auto grid max-w-5xl items-center gap-6 py-12 lg:grid-cols-3 lg:gap-12">
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-lg font-medium">Intuitive Interface</CardTitle>
-                  <Star className="w-6 h-6 text-accent" />
-                </CardHeader>
-                <CardContent>
-                  <CardDescription>Our clean and minimal UI makes it easy to focus on your creative work without distractions.</CardDescription>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-lg font-medium">AI-Powered Tools</CardTitle>
-                  <Zap className="w-6 h-6 text-accent" />
-                </CardHeader>
-                <CardContent>
-                  <CardDescription>Leverage the power of AI to generate ideas, images, and content to kickstart your project.</CardDescription>
-                </CardContent>
-              </Card>
-              <Card>
-                <CardHeader className="flex flex-row items-center justify-between pb-2">
-                  <CardTitle className="text-lg font-medium">Fully Customizable</CardTitle>
-                  <Feather className="w-6 h-6 text-accent" />
-                </CardHeader>
-                <CardContent>
-                  <CardDescription>Easily customize every aspect of your project to match your unique style and vision.</CardDescription>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-        </section>
       </main>
 
       <footer className="w-full bg-[#002a54] text-white py-12">
