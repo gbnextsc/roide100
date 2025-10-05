@@ -52,6 +52,12 @@ const nextConfig: NextConfig = {
         hostname: 'informaparaiba.com.br',
         port: '',
         pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'storage.googleapis.com',
+        port: '',
+        pathname: '/**',
       }
     ],
   },
