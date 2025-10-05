@@ -102,19 +102,28 @@ export default function CheckoutPage() {
     const buyer = { name: nameInput.value, email: emailInput.value };
     const amountInCents = Math.round(shippingCost * 100);
 
-    const result = await generatePixPayment(buyer, amountInCents);
+    try {
+        const result = await generatePixPayment(buyer, amountInCents);
 
-    if (result.success && result.data) {
-        setPixData(result.data);
-        setPaymentStep('pix');
-    } else {
-        toast({
+        if (result.success && result.data) {
+            setPixData(result.data);
+            setPaymentStep('pix');
+        } else {
+            toast({
+                variant: "destructive",
+                title: "Erro ao gerar pagamento",
+                description: result.error || "Não foi possível gerar o QR Code do Pix. Tente novamente.",
+            });
+        }
+    } catch (error) {
+         toast({
             variant: "destructive",
-            title: "Erro ao gerar pagamento",
-            description: result.error || "Não foi possível gerar o QR Code do Pix. Tente novamente.",
+            title: "Erro inesperado",
+            description: "Ocorreu um erro. Por favor, tente novamente mais tarde.",
         });
+    } finally {
+        setIsLoading(false);
     }
-    setIsLoading(false);
   };
 
   if (paymentStep === 'success') {
