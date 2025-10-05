@@ -6,8 +6,59 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { Badge } from '@/components/ui/badge';
+import { Truck } from 'lucide-react';
 
 export default function CheckoutPage() {
+  const [cep, setCep] = useState('');
+  const [shippingCost, setShippingCost] = useState<number | null>(null);
+  const [address, setAddress] = useState({ street: '', city: '', state: '' });
+  const [error, setError] = useState<string | null>(null);
+  const [showFreebieAlert, setShowFreebieAlert] = useState(false);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowFreebieAlert(true);
+    }, 500);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleCepChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.replace(/\D/g, '');
+    setCep(value);
+  };
+
+  const handleCalculateShipping = async () => {
+    if (cep.length !== 8) {
+      setError('CEP inválido. Digite 8 números.');
+      setShippingCost(null);
+      return;
+    }
+    setError(null);
+    try {
+      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+      if (!response.ok) {
+        throw new Error('Não foi possível buscar o CEP.');
+      }
+      const data = await response.json();
+      if (data.erro) {
+        setError('CEP não encontrado.');
+        setShippingCost(null);
+        setAddress({ street: '', city: '', state: '' });
+      } else {
+        setAddress({ street: data.logradouro, city: data.localidade, state: data.uf });
+        // Lógica de cálculo de frete (valor fixo para demonstração)
+        const calculatedShipping = parseFloat((Math.random() * 20 + 10).toFixed(2));
+        setShippingCost(calculatedShipping);
+      }
+    } catch (e) {
+      setError('Ocorreu um erro ao calcular o frete.');
+      setShippingCost(null);
+    }
+  };
+
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-4">
       <div className="w-full max-w-2xl">
@@ -16,6 +67,13 @@ export default function CheckoutPage() {
             <CardTitle className="text-2xl font-bold text-center">Checkout</CardTitle>
           </CardHeader>
           <CardContent>
+            {showFreebieAlert && (
+               <div className="mb-6 p-4 bg-green-100 border-l-4 border-green-500 rounded-r-lg animate-in fade-in-50 slide-in-from-left-4 duration-500">
+                  <p className="text-green-800 font-semibold">
+                    Você não paga nada pelo canudo! O único custo é o frete.
+                  </p>
+                </div>
+            )}
             <form className="space-y-6">
               <div>
                 <h3 className="text-lg font-semibold mb-4">Informações Pessoais</h3>
@@ -32,26 +90,52 @@ export default function CheckoutPage() {
               </div>
 
               <div>
+                <h3 className="text-lg font-semibold mb-4">Custo de Envio</h3>
+                <div className="flex items-start gap-4">
+                  <div className="flex-grow">
+                    <Label htmlFor="zip">CEP</Label>
+                    <Input id="zip" placeholder="00000-000" value={cep} onChange={handleCepChange} maxLength={8} />
+                  </div>
+                  <Button type="button" onClick={handleCalculateShipping} className="mt-6">
+                    <Truck className="mr-2 h-4 w-4" /> Calcular Frete
+                  </Button>
+                </div>
+                 {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+                 {shippingCost !== null && (
+                  <div className="mt-4 p-4 bg-blue-50 rounded-lg">
+                    <p className="font-semibold text-blue-800">Custo do Frete: R$ {shippingCost.toFixed(2)}</p>
+                    <p className="text-sm text-gray-600">{address.street}, {address.city} - {address.state}</p>
+                  </div>
+                )}
+              </div>
+
+              <div>
                 <h3 className="text-lg font-semibold mb-4">Endereço de Entrega</h3>
                 <div className="space-y-4">
                   <div>
-                    <Label htmlFor="address">Endereço</Label>
-                    <Input id="address" placeholder="Rua, número, bairro" />
+                    <Label htmlFor="address-street">Endereço</Label>
+                    <Input id="address-street" placeholder="Rua, avenida..." value={address.street} onChange={e => setAddress({...address, street: e.target.value})} />
                   </div>
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                     <div>
-                      <Label htmlFor="city">Cidade</Label>
-                      <Input id="city" placeholder="Sua cidade" />
+                      <Label htmlFor="address-number">Número</Label>
+                      <Input id="address-number" placeholder="Nº" />
                     </div>
-                    <div>
-                      <Label htmlFor="state">Estado</Label>
-                      <Input id="state" placeholder="UF" />
-                    </div>
-                    <div>
-                      <Label htmlFor="zip">CEP</Label>
-                      <Input id="zip" placeholder="00000-000" />
+                    <div className="col-span-2">
+                       <Label htmlFor="address-complement">Complemento</Label>
+                      <Input id="address-complement" placeholder="Apto, bloco, etc. (opcional)" />
                     </div>
                   </div>
+                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <Label htmlFor="city">Cidade</Label>
+                        <Input id="city" placeholder="Sua cidade" value={address.city} onChange={e => setAddress({...address, city: e.target.value})} />
+                      </div>
+                      <div>
+                        <Label htmlFor="state">Estado</Label>
+                        <Input id="state" placeholder="UF" value={address.state} onChange={e => setAddress({...address, state: e.target.value})} />
+                      </div>
+                    </div>
                 </div>
               </div>
 
