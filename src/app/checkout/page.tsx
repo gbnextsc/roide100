@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Truck, ShoppingCart } from 'lucide-react';
+import { Truck, ShoppingCart, Lock } from 'lucide-react';
 import Image from 'next/image';
 
 export default function CheckoutPage() {
@@ -82,13 +82,13 @@ export default function CheckoutPage() {
         <div className="w-full">
           <Card>
             <CardHeader>
-              <CardTitle className="text-2xl font-bold text-center">Checkout</CardTitle>
+              <CardTitle className="text-2xl font-bold text-center">Complete seu Pedido</CardTitle>
             </CardHeader>
             <CardContent>
               {showFreebieAlert && (
                  <div className="mb-6 p-4 bg-green-100 border-l-4 border-green-500 rounded-r-lg animate-in fade-in-50 slide-in-from-left-4 duration-500">
                     <p className="text-green-800 font-semibold">
-                      Você não paga nada pelo canudo! O único custo é o frete.
+                      Parabéns! Você ganhou um SafeSip. Cubra apenas o custo de envio e receba sua segurança em casa.
                     </p>
                   </div>
               )}
@@ -158,7 +158,9 @@ export default function CheckoutPage() {
                 </div>
 
                 <div>
-                  <h3 className="text-lg font-semibold mb-4">Pagamento</h3>
+                  <h3 className="text-lg font-semibold mb-4 flex items-center">
+                    Pagamento Seguro <Lock className="ml-2 h-4 w-4 text-green-600" />
+                  </h3>
                   <div className="space-y-4">
                     <div>
                       <Label htmlFor="card-number">Número do Cartão</Label>
@@ -177,7 +179,7 @@ export default function CheckoutPage() {
                   </div>
                 </div>
 
-                <Button type="submit" className="w-full" size="lg">
+                <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white" size="lg">
                   <ShoppingCart className="mr-2 h-5 w-5" />
                   Finalizar Compra
                 </Button>
