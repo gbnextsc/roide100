@@ -242,7 +242,7 @@ export default function LandingPage() {
               width="1280"
               height="320"
               alt="Campanha Nacional de Vacinação Contra a Raiva"
-              className="mx-auto aspect-[4/1] overflow-hidden rounded-xl object-cover"
+              className="mx-auto rounded-xl object-contain"
             />
           </div>
         </section>
@@ -282,3 +282,5 @@ export default function LandingPage() {
     </div>
   );
 }
+
+    
