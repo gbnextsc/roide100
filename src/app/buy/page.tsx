@@ -4,7 +4,7 @@ import Link from 'next/link';
 
 export default function BuyPage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900 p-4">
+    <div className="flex flex-col items-center justify-center min-h-screen p-4" style={{ backgroundColor: '#0D1B2A' }}>
       <div className="w-full max-w-4xl">
         <div className="relative" style={{ paddingBottom: '56.25%', height: 0 }}>
           <iframe
@@ -18,13 +18,13 @@ export default function BuyPage() {
         </div>
       </div>
       <div className="mt-8">
-        <Button size="lg" className="bg-blue-600 text-lg font-bold text-white hover:bg-blue-700 uppercase">
+        <Button size="lg" className="text-lg font-bold uppercase text-white" style={{ backgroundColor: '#FF6B00', color: '#FFFFFF' }}>
           garanta já o seu
         </Button>
       </div>
       <div className="mt-4">
         <Link href="/" passHref>
-          <Button variant="link">Voltar para a página inicial</Button>
+          <Button variant="link" style={{ color: '#FFFFFF' }}>Voltar para a página inicial</Button>
         </Link>
       </div>
     </div>
