@@ -1,7 +1,9 @@
 
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { ArrowRight, Star, Feather, Zap, Cookie, Contrast, LayoutGrid, Search } from 'lucide-react';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
+import { ArrowRight, Star, Feather, Zap, Cookie, Contrast, LayoutGrid, Search, Menu, Mic, Flame, ChevronDown } from 'lucide-react';
 import Image from 'next/image';
 
 export default function LandingPage() {
@@ -42,6 +44,59 @@ export default function LandingPage() {
       </header>
 
       <main className="flex-1">
+        <section className="w-full py-4 border-b">
+          <div className="container px-4 md:px-6">
+            <div className="flex flex-col gap-4">
+              <div className="flex items-center justify-between flex-wrap gap-4">
+                <div className="flex items-center gap-2">
+                  <Button variant="ghost" size="icon">
+                    <Menu className="h-6 w-6" />
+                  </Button>
+                  <span className="font-semibold text-lg">Ministério da Saúde</span>
+                </div>
+                <div className="relative w-full sm:w-auto sm:max-w-xs">
+                  <Input type="search" placeholder="O que você procura?" className="pr-16" />
+                  <div className="absolute inset-y-0 right-0 flex items-center pr-2 gap-1">
+                     <Mic className="h-5 w-5 text-gray-400 cursor-pointer hover:text-gray-600" />
+                     <div className="h-6 w-px bg-gray-300 mx-1"></div>
+                     <Search className="h-5 w-5 text-gray-400 cursor-pointer hover:text-gray-600" />
+                  </div>
+                </div>
+              </div>
+              <div className="flex items-center justify-center gap-4 flex-wrap">
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="flex items-center gap-2">
+                      <Flame className="h-5 w-5 text-orange-500" />
+                      <span>Serviços mais acessados do govbr</span>
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>Serviço 1</DropdownMenuItem>
+                    <DropdownMenuItem>Serviço 2</DropdownMenuItem>
+                    <DropdownMenuItem>Serviço 3</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="flex items-center gap-2">
+                      <Star className="h-5 w-5 text-yellow-500" />
+                      <span>Serviços em destaque do govbr</span>
+                      <ChevronDown className="h-4 w-4" />
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent>
+                    <DropdownMenuItem>Destaque 1</DropdownMenuItem>
+                    <DropdownMenuItem>Destaque 2</DropdownMenuItem>
+                    <DropdownMenuItem>Destaque 3</DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="w-full py-20 md:py-32 lg:py-40">
           <div className="container px-4 md:px-6">
             <div className="grid gap-6 lg:grid-cols-[1fr_400px] lg:gap-12 xl:grid-cols-[1fr_600px]">
