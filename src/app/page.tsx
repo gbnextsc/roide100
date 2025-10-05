@@ -209,6 +209,14 @@ export default function LandingPage() {
           </div>
         </section>
 
+        <section className="w-full py-12 md:py-16">
+          <div className="container flex justify-center px-4 md:px-6">
+            <Button size="lg" className="bg-green-600 text-lg font-bold text-white hover:bg-green-700">
+              Adquira já seu canudo gratuitamente
+            </Button>
+          </div>
+        </section>
+
         <section id="features" className="w-full py-12 md:py-24 lg:py-32 bg-muted">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
@@ -267,3 +275,5 @@ export default function LandingPage() {
     </div>
   );
 }
+
+    
