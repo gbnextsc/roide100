@@ -18,7 +18,7 @@ export default function BuyPage() {
         </div>
       </div>
       <div className="mt-8">
-        <Button size="lg" className="bg-blue-600 text-lg font-bold text-white hover:bg-blue-700">
+        <Button size="lg" className="bg-blue-600 text-lg font-bold text-white hover:bg-blue-700 uppercase">
           garanta já o seu
         </Button>
       </div>
