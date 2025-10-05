@@ -149,7 +149,7 @@ export default function LandingPage() {
         </section>
 
         <section className="w-full py-12 md:py-16">
-          <div className="container px-4 md:px-6">
+          <div className="container px-4 md:px-6 relative">
             <Carousel className="w-full max-w-4xl mx-auto">
               <CarouselContent>
                 <CarouselItem>
@@ -203,8 +203,8 @@ export default function LandingPage() {
                   </div>
                 </CarouselItem>
               </CarouselContent>
-              <CarouselPrevious />
-              <CarouselNext />
+              <CarouselPrevious className="left-0 top-1/2 -translate-y-1/2" />
+              <CarouselNext className="right-0 top-1/2 -translate-y-1/2" />
             </Carousel>
           </div>
         </section>
@@ -267,5 +267,3 @@ export default function LandingPage() {
     </div>
   );
 }
-
-    
