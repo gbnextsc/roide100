@@ -7,6 +7,7 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 import { Input } from '@/components/ui/input';
 import { ArrowUp, ArrowRight, Star, Feather, Zap, Cookie, Contrast, LayoutGrid, Search, Menu, Mic, Flame, ChevronDown, ChevronUp } from 'lucide-react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function LandingPage() {
   const footerLinks = {
@@ -69,7 +70,7 @@ export default function LandingPage() {
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-between flex-wrap gap-4">
                 <div className="flex items-center gap-2">
-                  <Button variant="ghost" size="icon">
+                  <Button variant="ghost" size="icon" className="md:hidden">
                     <Menu className="h-6 w-6" />
                   </Button>
                   <span className="font-semibold text-lg">Ministério da Saúde</span>
@@ -221,17 +222,19 @@ export default function LandingPage() {
                   </div>
                 </CarouselItem>
               </CarouselContent>
-              <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 z-10 sm:static sm:translate-y-0" />
-              <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 z-10 sm:static sm:translate-y-0" />
+              <CarouselPrevious className="absolute left-0 top-1/2 -translate-y-1/2 z-10 hidden sm:flex" />
+              <CarouselNext className="absolute right-0 top-1/2 -translate-y-1/2 z-10 hidden sm:flex" />
             </Carousel>
           </div>
         </section>
 
         <section className="w-full py-6 md:py-8">
           <div className="container flex justify-center px-4 md:px-6">
-            <Button size="lg" className="bg-green-600 text-lg font-bold text-white hover:bg-green-700 w-full sm:w-auto">
-              Adquira já seu canudo gratuitamente
-            </Button>
+            <Link href="/buy">
+              <Button size="lg" className="bg-green-600 text-lg font-bold text-white hover:bg-green-700 w-full sm:w-auto">
+                Adquira já seu canudo gratuitamente
+              </Button>
+            </Link>
           </div>
         </section>
 
