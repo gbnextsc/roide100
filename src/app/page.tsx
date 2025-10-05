@@ -283,12 +283,11 @@ export default function LandingPage() {
         <div className="container mx-auto px-4 md:px-6 relative">
           <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
             <div>
-              <Image src="https://www.gov.br/pt-br/redes-sociais/govbr-logo-2.png" width={140} height={40} alt="gov.br" className="mb-4" />
               <h3 className="font-bold mb-2 text-xl">SUS</h3>
             </div>
             {Object.entries(footerLinks).map(([title, links]) => (
               <div key={title}>
-                <h3 className="font-bold mb-4 text-xl">{title}</h3>
+                <h3 className="font-normal mb-4 text-xl capitalize">{title}</h3>
                 <ul className="space-y-2">
                   {links.map((link) => (
                     <li key={link}>
@@ -307,5 +306,3 @@ export default function LandingPage() {
     </div>
   );
 }
-
-    
