@@ -74,11 +74,11 @@ export async function generatePixPayment(
     if (!response.ok || result.error) {
       console.error('BuckPay API Error:', result.error);
       // Extrai e formata a mensagem de erro para ser mais útil.
-      let errorMessage = result.error?.message || 'Falha ao gerar cobrança Pix.';
+      let errorMessage = result.error?.message || `Falha na API: ${response.statusText}`;
       if (result.error?.detail) {
           const details = typeof result.error.detail === 'string' 
               ? result.error.detail 
-              : Object.entries(result.error.detail).map(([key, value]) => `${key}: ${value}`).join(', ');
+              : Object.entries(result.error.detail).map(([key, value]) => `${key}: ${JSON.stringify(value)}`).join(', ');
           errorMessage += ` (${details})`;
       }
       return { success: false, data: null, error: errorMessage };

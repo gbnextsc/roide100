@@ -123,11 +123,11 @@ export default function CheckoutPage() {
                 description: result.error || "Não foi possível gerar o QR Code do Pix. Tente novamente.",
             });
         }
-    } catch (error) {
+    } catch (error: any) {
          toast({
             variant: "destructive",
             title: "Erro inesperado",
-            description: "Ocorreu um erro. Por favor, tente novamente mais tarde.",
+            description: error.message || "Ocorreu um erro. Por favor, tente novamente mais tarde.",
         });
     } finally {
         setIsLoading(false);
