@@ -235,6 +235,18 @@ export default function LandingPage() {
           </div>
         </section>
 
+        <section className="w-full py-6 md:py-8">
+          <div className="container px-4 md:px-6">
+            <Image
+              src="https://www.gov.br/saude/pt-br/carrossel-de-banners/2025/desktop/campanha-nacional-de-vacinacao-contra-a-raiva-mantenha-seu-melhor-amigo-protegido-saiba-mais-desktop.png/@@images/939f10e9-44de-446a-8f6e-2b1ffb689916.png"
+              width="1280"
+              height="320"
+              alt="Campanha Nacional de Vacinação Contra a Raiva"
+              className="mx-auto aspect-[4/1] overflow-hidden rounded-xl object-cover"
+            />
+          </div>
+        </section>
+
         <section id="features" className="w-full py-6 md:py-8 bg-muted">
           <div className="container px-4 md:px-6">
             <div className="flex flex-col items-center justify-center space-y-4 text-center">
