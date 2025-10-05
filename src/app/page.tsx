@@ -140,9 +140,9 @@ export default function LandingPage() {
             <Image
               src="https://www.gov.br/saude/pt-br/pagina-inicial/@@govbr.institucional.banner/c4abc7ea-5f67-44fc-bee4-4c15839c28b5/@@images/fe323264-4a33-4f94-a98f-657f4ca92a39.png"
               width="1280"
-              height="400"
+              height="320"
               alt="Banner Principal"
-              className="mx-auto aspect-[16/5] overflow-hidden rounded-xl object-cover"
+              className="mx-auto aspect-[4/1] overflow-hidden rounded-xl object-cover"
             />
           </div>
         </section>
