@@ -1,4 +1,3 @@
-
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
@@ -198,10 +197,11 @@ export default function LandingPage() {
                     <div className="flex flex-col gap-4">
                       <Image
                         src="https://informaparaiba.com.br/wp-content/uploads/2025/10/unnamed-13-scaled.jpg"
-                        width="1200"
-                        height="675"
+                        width={1200}
+                        height={675}
                         alt="Canudos de teste de metanol"
                         className="rounded-lg object-cover w-full aspect-video"
+                        data-ai-hint="methanol detector straws"
                       />
                       <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl">
                         Governo inicia distribuição de canudos de teste de metanol desenvolvidos por cientistas da Paraíba
