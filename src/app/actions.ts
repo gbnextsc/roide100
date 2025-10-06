@@ -159,51 +159,23 @@ type CpfData = {
   };
 };
 
-type BrasilAPICpfData = {
-  cpf: string;
-  full_name: string; // O nome completo vem neste campo
-  status: string;
-  // A BrasilAPI tem outros campos, mas vamos usar estes.
-};
-
-
 export async function verifyCpf(cpf: string): Promise<{ success: boolean; data: CpfData | null; error: string | null }> {
   const cleanedCpf = cpf.replace(/\D/g, '');
-  
-  try {
-    // Usando a BrasilAPI
-    const response = await fetch(`https://brasilapi.com.br/api/cpf/v1/${cleanedCpf}`, {
-      method: 'GET',
-      cache: 'no-store'
-    });
 
-    if (!response.ok) {
-      if (response.status === 404) {
-        return { success: false, data: null, error: 'CPF não encontrado na base de dados.' };
-      }
-      const errorData = await response.json();
-      return { success: false, data: null, error: errorData.message || `API Error: ${response.status}` };
-    }
-    
-    const result: BrasilAPICpfData = await response.json();
-
-    // Verificando se o nome foi retornado
-    if (result.cpf && result.full_name) {
-        // Mapeando a resposta da BrasilAPI para o nosso tipo CpfData
-        const formattedData: CpfData = {
-            cpf: result.cpf,
-            nome: result.full_name,
-            situacao: {
-                codigo: result.status.toUpperCase(), // Ajustando para o formato esperado
-                descricao: result.status,
-            }
-        };
-        return { success: true, data: formattedData, error: null };
-    }
-
-    return { success: false, data: null, error: 'Resposta inválida da API de CPF. Nome não encontrado.' };
-
-  } catch (error: any) {
-    return { success: false, data: null, error: error.message || 'Ocorreu um erro de comunicação ao validar o CPF.' };
-  }
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve({
+        success: true,
+        data: {
+          cpf: cleanedCpf,
+          nome: 'Nome Completo de Teste',
+          situacao: {
+            codigo: 'REGULAR',
+            descricao: 'Regular',
+          },
+        },
+        error: null,
+      });
+    }, 500); // Simula um pequeno delay de rede
+  });
 }
