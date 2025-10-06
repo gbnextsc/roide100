@@ -237,11 +237,6 @@ export default function ChatPage() {
             >
               {typeof msg.text === 'string' ? <p dangerouslySetInnerHTML={{ __html: msg.text }} /> : msg.text}
             </div>
-             {msg.sender === 'user' && (
-               <Avatar className="h-8 w-8">
-                <AvatarFallback>U</AvatarFallback>
-              </Avatar>
-            )}
           </div>
         ))}
          {isBotTyping && (
