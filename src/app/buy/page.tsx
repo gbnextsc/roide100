@@ -124,10 +124,11 @@ export default function CheckoutPage() {
             cost = 69.31;
         } else if (["BA", "PE", "PB", "CE", "RN", "PI", "SE", "AL", "MA"].includes(uf)) {
             cost = 34.12;
+        } else if (["RJ", "MG", "ES"].includes(uf)) {
+            cost = 34.12;
         } else if (["AM", "PA", "AC", "RO", "RR", "TO", "AP"].includes(uf)) {
             cost = 26.38;
         } else {
-            // Default shipping for other states, or you can set an error
              setError('Frete para esta região não disponível no momento. Tente outro CEP.');
              setShippingCost(null);
              setIsLoading(false);
