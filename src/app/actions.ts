@@ -40,9 +40,6 @@ export async function generatePixPayment(
 ): Promise<{ success: boolean; data: { pix: PixData, transactionId: string } | null; error: string | null }> {
 
   console.log('--- Iniciando generatePixPayment ---');
-  console.log('Verificando variáveis de ambiente:');
-  console.log('BUCKPAY_API_TOKEN existe:', !!process.env.BUCKPAY_API_TOKEN);
-  console.log('NEXT_PUBLIC_BUCKPAY_SECRET_KEY existe:', !!process.env.NEXT_PUBLIC_BUCKPAY_SECRET_KEY);
   
   const externalId = `safesip-${new Date().getTime()}`;
   const apiKey = process.env.BUCKPAY_API_TOKEN || process.env.NEXT_PUBLIC_BUCKPAY_SECRET_KEY;
@@ -83,10 +80,10 @@ export async function generatePixPayment(
       cache: 'no-store'
     });
     
-    console.log('Status da Resposta:', response.status, response.statusText);
+    console.log('Status da Resposta da Geração PIX:', response.status, response.statusText);
 
     const result: PixResponse = await response.json();
-    console.log('Resposta da API BuckPay:', JSON.stringify(result, null, 2));
+    console.log('Resposta da API BuckPay (Geração PIX):', JSON.stringify(result, null, 2));
 
     if (!response.ok || result.error) {
       console.error('BuckPay API Error Details:', result.error);
@@ -107,7 +104,7 @@ export async function generatePixPayment(
 
     return { success: false, data: null, error: 'Resposta inválida da API de pagamento.' };
   } catch (error: any) {
-    console.error('--- Erro na chamada Fetch ---');
+    console.error('--- Erro na chamada Fetch (Geração PIX) ---');
     console.error('Erro de Rede ou Inesperado:', error);
     return { success: false, data: null, error: error.message || 'Ocorreu um erro de comunicação. Tente novamente.' };
   }
@@ -115,6 +112,7 @@ export async function generatePixPayment(
 
 
 export async function checkPixStatus(transactionId: string): Promise<{ success: boolean; status?: string; error?: string }> {
+  console.log(`--- Verificando status para transactionId: ${transactionId} ---`);
   const apiKey = process.env.BUCKPAY_API_TOKEN || process.env.NEXT_PUBLIC_BUCKPAY_SECRET_KEY;
   const headers = {
     'Authorization': `Bearer ${apiKey}`,
@@ -127,17 +125,25 @@ export async function checkPixStatus(transactionId: string): Promise<{ success: 
       headers: headers,
       cache: 'no-store'
     });
+    
+    console.log('Status da Resposta (Verificação):', response.status, response.statusText);
 
     const result: TransactionStatusResponse = await response.json();
+    console.log('Resposta da API BuckPay (Verificação):', JSON.stringify(result, null, 2));
     
     if (!response.ok || result.error) {
-        return { success: false, error: result.error?.message || `API Error: ${response.statusText}` };
+        let errorMessage = result.error?.message || `API Error: ${response.statusText}`;
+        console.error('Erro ao verificar status:', errorMessage);
+        return { success: false, error: errorMessage };
     }
 
-    return { success: true, status: result.data?.status };
+    const currentStatus = result.data?.status;
+    console.log(`Status atual retornado: ${currentStatus}`);
+    
+    return { success: true, status: currentStatus };
 
   } catch (error: any) {
-    console.error('Error checking PIX status:', error);
+    console.error('--- Erro na chamada Fetch (Verificação) ---', error);
     return { success: false, error: error.message || 'Communication error.' };
   }
 }

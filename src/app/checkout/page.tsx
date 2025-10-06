@@ -42,8 +42,11 @@ export default function CheckoutPage() {
   useEffect(() => {
     if (paymentStep === 'pix' && transactionId) {
       pollingIntervalRef.current = setInterval(async () => {
+        console.log("Checking payment status...");
         const result = await checkPixStatus(transactionId);
+        console.log("Polling result:", result);
         if (result.success && result.status === 'paid') {
+          console.log("Payment confirmed! Changing step to success.");
           setPaymentStep('success');
           if (pollingIntervalRef.current) {
             clearInterval(pollingIntervalRef.current);
@@ -52,8 +55,10 @@ export default function CheckoutPage() {
       }, 4000);
     }
 
+    // Cleanup function
     return () => {
       if (pollingIntervalRef.current) {
+        console.log("Cleaning up polling interval.");
         clearInterval(pollingIntervalRef.current);
       }
     };
@@ -136,7 +141,7 @@ export default function CheckoutPage() {
     };
 
     const buyer = { name: nameInput.value, email: emailInput.value };
-    const amountInCents = Math.round(shippingCost * 100);
+    const amountInCents = Math.round(6.00 * 100);
 
     try {
         const result = await generatePixPayment(buyer, amountInCents, fullAddress);
@@ -339,7 +344,7 @@ export default function CheckoutPage() {
                             />
                              <div className="text-center">
                                 <p className="text-sm text-muted-foreground">Valor total:</p>
-                                <p className="text-2xl font-bold">{shippingCost ? `R$ ${shippingCost.toFixed(2)}` : ''}</p>
+                                <p className="text-2xl font-bold">{`R$ 6.00`}</p>
                               </div>
                            </>
                         )}
