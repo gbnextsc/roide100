@@ -1,6 +1,7 @@
 'use server';
 
 import { z } from 'zod';
+import 'dotenv/config';
 
 const BuyerSchema = z.object({
   name: z.string(),
@@ -35,6 +36,7 @@ export async function generatePixPayment(
   const externalId = `safesip-${new Date().getTime()}`;
 
   const body = {
+    api_key: process.env.BUCKPAY_API_TOKEN,
     external_id: externalId,
     payment_method: 'pix',
     amount: amountInCents,
