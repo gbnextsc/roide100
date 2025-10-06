@@ -118,20 +118,6 @@ export default function PromoPage() {
         )}
       </main>
 
-      {/* Sticky CTA for mobile */}
-      <div className="block md:hidden sticky bottom-0 left-0 right-0 p-4 bg-[#0a1b2e]/80 backdrop-blur-sm border-t border-white/10">
-        <Link href={CHECKOUT_URL} passHref legacyBehavior>
-          <a
-            onClick={handleCtaClick}
-            role="button"
-            aria-label="Ir para checkout do canudo detector de metanol"
-            className="w-full text-center bg-[#ff7300] text-white font-bold text-lg uppercase px-8 py-4 rounded-md shadow-lg hover:bg-orange-700"
-          >
-            GARANTA JÁ O SEU
-          </a>
-        </Link>
-      </div>
-
       <footer className="w-full py-6 text-center text-white/60 text-sm">
         <p>© 2025 SafeSip™ — Todos os direitos reservados</p>
       </footer>
