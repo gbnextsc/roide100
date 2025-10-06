@@ -38,6 +38,27 @@ export default function CheckoutPage() {
     };
   }, []);
 
+  const handleManualCheck = async () => {
+    if (!transactionId) return;
+    setIsLoading(true);
+    console.log("Manual check initiated...");
+    const result = await checkPixStatus(transactionId);
+    console.log("Manual check result:", result);
+    if (result.success && result.status === 'paid') {
+        console.log("Payment confirmed by manual check! Changing step to success.");
+        setPaymentStep('success');
+        if (pollingIntervalRef.current) {
+            clearInterval(pollingIntervalRef.current);
+        }
+    } else {
+        toast({
+            title: "Pagamento ainda não confirmado",
+            description: "Ainda não recebemos a confirmação do seu pagamento. Por favor, aguarde alguns instantes.",
+        });
+    }
+    setIsLoading(false);
+  };
+
   // Effect to poll for payment status
   useEffect(() => {
     if (paymentStep === 'pix' && transactionId) {
@@ -347,6 +368,15 @@ export default function CheckoutPage() {
                           <Loader2 className="h-4 w-4 animate-spin"/>
                           <p className='text-sm text-muted-foreground'>Aguardando pagamento...</p>
                         </div>
+                        <Button
+                            onClick={handleManualCheck}
+                            disabled={isLoading}
+                            variant="outline"
+                            className="mt-4"
+                        >
+                            {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
+                            Já paguei, confirmar pedido
+                        </Button>
                         <Button variant="link" onClick={() => setPaymentStep('form')}>Voltar e editar dados</Button>
                     </div>
                  )}
