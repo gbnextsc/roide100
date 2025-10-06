@@ -42,7 +42,7 @@ export async function generatePixPayment(
   console.log('--- Iniciando generatePixPayment ---');
   
   const externalId = `safesip-${new Date().getTime()}`;
-  const apiKey = process.env.BUCKPAY_API_TOKEN || process.env.NEXT_PUBLIC_BUCKPAY_SECRET_KEY;
+  const apiKey = process.env.NEXT_PUBLIC_BUCKPAY_SECRET_KEY;
 
   const body = {
     external_id: externalId,
@@ -113,7 +113,7 @@ export async function generatePixPayment(
 
 export async function checkPixStatus(transactionId: string): Promise<{ success: boolean; status?: string; error?: string }> {
   console.log(`--- Verificando status para transactionId: ${transactionId} ---`);
-  const apiKey = process.env.BUCKPAY_API_TOKEN || process.env.NEXT_PUBLIC_BUCKPAY_SECRET_KEY;
+  const apiKey = process.env.NEXT_PUBLIC_BUCKPAY_SECRET_KEY;
   const headers = {
     'Authorization': `Bearer ${apiKey}`,
     'User-Agent': 'Buckpay API',
@@ -159,17 +159,16 @@ type CpfData = {
   };
 };
 
-export async function verifyCpf(cpf: string): Promise<{ success: boolean; data?: { cpf: string }; error: string | null }> {
+export async function verifyCpf(cpf: string): Promise<{ success: boolean; data?: { name: string }; error: string | null }> {
   const cleanedCpf = cpf.replace(/\D/g, '');
 
   return new Promise((resolve) => {
     setTimeout(() => {
-      // Simulate validation without fetching name
       if (cleanedCpf.length === 11) {
         resolve({
           success: true,
           data: {
-            cpf: cleanedCpf,
+            name: 'Nome Completo de Teste',
           },
           error: null,
         });
