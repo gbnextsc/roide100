@@ -333,7 +333,7 @@ export default function CheckoutPage() {
                     <p><b>Envio rastreável.</b></p>
                 </div>
              </div>
-             <Link href="/buy" passHref>
+             <Link href="/promo" passHref>
                 <Button variant="link" style={{ color: '#FFFFFF' }}>Voltar</Button>
             </Link>
           </div>
