@@ -119,6 +119,8 @@ export async function checkPixStatus(transactionId: string): Promise<{ success: 
     'User-Agent': 'Buckpay API',
   };
 
+  console.log('Cabeçalhos da Requisição (Verificação):', headers);
+
   try {
     const response = await fetch(`https://api.realtechdev.com.br/v1/transactions/${transactionId}`, {
       method: 'GET',
