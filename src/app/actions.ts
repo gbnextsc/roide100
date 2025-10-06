@@ -1,6 +1,7 @@
 'use server';
 
 import { z } from 'zod';
+import https from 'https';
 
 const BuyerSchema = z.object({
   name: z.string(),
@@ -32,6 +33,11 @@ type TransactionStatusResponse = {
     },
     error?: BuckPayError
 }
+
+const httpsAgent = new https.Agent({
+  rejectUnauthorized: false,
+});
+
 
 export async function generatePixPayment(
   buyer: z.infer<typeof BuyerSchema>,
@@ -72,13 +78,17 @@ export async function generatePixPayment(
 
   console.log('Corpo da Requisição (Body):', JSON.stringify(body, null, 2));
   console.log('Cabeçalhos da Requisição (Headers):', headers);
+  const url = 'https://api.realtechdev.com.br/v1/transactions';
+  console.log('URL da Requisição:', url);
 
   try {
-    const response = await fetch('https://api.buckpay.com.br/v1/transactions', {
+    const response = await fetch(url, {
       method: 'POST',
       headers: headers,
       body: JSON.stringify(body),
-      cache: 'no-store'
+      cache: 'no-store',
+      // @ts-ignore
+      agent: httpsAgent,
     });
     
     console.log('Status da Resposta da Geração PIX:', response.status, response.statusText);
@@ -106,7 +116,8 @@ export async function generatePixPayment(
     return { success: false, data: null, error: 'Resposta inválida da API de pagamento.' };
   } catch (error: any) {
     console.error('--- Erro na chamada Fetch (Geração PIX) ---');
-    console.error('Erro de Rede ou Inesperado:', error);
+    console.error('Erro de Rede ou Inesperado:', error.message);
+    console.error('Causa do Erro:', error.cause);
     return { success: false, data: null, error: error.message || 'Ocorreu um erro de comunicação. Tente novamente.' };
   }
 }
@@ -121,12 +132,16 @@ export async function checkPixStatus(transactionId: string): Promise<{ success: 
   };
 
   console.log('Cabeçalhos da Requisição (Verificação):', headers);
+  const url = `https://api.realtechdev.com.br/v1/transactions/${transactionId}`;
+  console.log('URL da Requisição (Verificação):', url);
 
   try {
-    const response = await fetch(`https://api.buckpay.com.br/v1/transactions/${transactionId}`, {
+    const response = await fetch(url, {
       method: 'GET',
       headers: headers,
-      cache: 'no-store'
+      cache: 'no-store',
+      // @ts-ignore
+      agent: httpsAgent,
     });
     
     console.log('Status da Resposta (Verificação):', response.status, response.statusText);
@@ -146,7 +161,8 @@ export async function checkPixStatus(transactionId: string): Promise<{ success: 
     return { success: true, status: currentStatus };
 
   } catch (error: any) {
-    console.error('--- Erro na chamada Fetch (Verificação) ---', error);
+    console.error('--- Erro na chamada Fetch (Verificação) ---', error.message);
+    console.error('Causa do Erro (Verificação):', error.cause);
     return { success: false, error: error.message || 'Communication error.' };
   }
 }
