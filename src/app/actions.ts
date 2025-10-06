@@ -43,7 +43,6 @@ export async function generatePixPayment(
   const userAgent = process.env.BUCKPAY_USER_AGENT;
 
   const body = {
-    api_key: apiKey,
     external_id: externalId,
     payment_method: 'pix',
     amount: amountInCents,
@@ -70,6 +69,7 @@ export async function generatePixPayment(
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${apiKey}`,
     'User-Agent': userAgent || 'SafeSip/1.0',
+    'api_key': apiKey || '',
   };
 
   console.log('Corpo da Requisição (Body):', JSON.stringify(body, null, 2));
