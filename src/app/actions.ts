@@ -68,7 +68,6 @@ export async function generatePixPayment(
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${apiKey}`,
     'User-Agent': 'Buckpay API',
-    'api_key': apiKey || '',
   };
 
   console.log('Corpo da Requisição (Body):', JSON.stringify(body, null, 2));
