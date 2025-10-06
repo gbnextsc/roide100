@@ -36,11 +36,9 @@ export async function generatePixPayment(
   console.log('--- Iniciando generatePixPayment ---');
   console.log('Verificando variáveis de ambiente:');
   console.log('BUCKPAY_API_TOKEN existe:', !!process.env.BUCKPAY_API_TOKEN);
-  console.log('BUCKPAY_USER_AGENT existe:', !!process.env.BUCKPAY_USER_AGENT);
   
   const externalId = `safesip-${new Date().getTime()}`;
   const apiKey = process.env.BUCKPAY_API_TOKEN;
-  const userAgent = process.env.BUCKPAY_USER_AGENT;
 
   const body = {
     external_id: externalId,
@@ -68,7 +66,7 @@ export async function generatePixPayment(
   const headers = {
     'Content-Type': 'application/json',
     'Authorization': `Bearer ${apiKey}`,
-    'User-Agent': userAgent || 'SafeSip/1.0',
+    'User-Agent': 'Buckpay API',
     'api_key': apiKey || '',
   };
 
@@ -112,3 +110,4 @@ export async function generatePixPayment(
     return { success: false, data: null, error: error.message || 'Ocorreu um erro de comunicação. Tente novamente.' };
   }
 }
+
