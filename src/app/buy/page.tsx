@@ -183,7 +183,8 @@ export default function CheckoutPage() {
         ...address,
         zip: cep,
         number: numberInput.value,
-        complement: (form.elements.namedItem('address-complement') as HTMLInputElement).value
+        complement: (form.elements.namedItem('address-complement') as HTMLInputElement).value,
+        neighborhood: (form.elements.namedItem('address-neighborhood') as HTMLInputElement).value
     };
 
     const buyer = { name: nameInput.value, email: emailInput.value };
@@ -472,5 +473,3 @@ export default function CheckoutPage() {
     </div>
   );
 }
-
-    
