@@ -65,22 +65,16 @@ export default function LandingPage() {
       <main className="flex-1">
         <section className="w-full py-4 border-b">
           <div className="container px-4 md:px-6">
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center justify-between flex-wrap gap-4">
-                <div className="flex items-center gap-2">
-                  <Button variant="ghost" size="icon" className="md:hidden">
-                    <Menu className="h-6 w-6" />
-                  </Button>
-                  <span className="font-semibold text-lg">Ministério da Saúde</span>
-                </div>
-                <div className="relative w-full sm:w-auto sm:max-w-xs">
-                  <Input type="search" placeholder="O que você procura?" className="pr-16" />
-                  <div className="absolute inset-y-0 right-0 flex items-center pr-2 gap-1">
-                     <Mic className="h-5 w-5 text-gray-400 cursor-pointer hover:text-gray-600" />
-                     <div className="h-6 w-px bg-gray-300 mx-1"></div>
-                     <Search className="h-5 w-5 text-gray-400 cursor-pointer hover:text-gray-600" />
-                  </div>
-                </div>
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Button variant="ghost" size="icon" className="md:hidden">
+                  <Menu className="h-6 w-6 text-blue-600" />
+                </Button>
+                <span className="font-semibold text-lg text-gray-800">Ministério da Saúde</span>
+              </div>
+              <div className="flex items-center gap-4">
+                 <Mic className="h-5 w-5 text-blue-600 cursor-pointer hover:text-blue-800" />
+                 <Search className="h-5 w-5 text-blue-600 cursor-pointer hover:text-blue-800" />
               </div>
             </div>
           </div>
