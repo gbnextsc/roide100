@@ -6,7 +6,7 @@ import { ShieldCheck, Truck, Lock } from 'lucide-react';
 import React, { useEffect, useRef } from 'react';
 
 const VIDEO_URL = "https://drive.google.com/file/d/1egMvBOIyQBfC0fm8FaZ66vPbi9nbMHaf/preview";
-const CHECKOUT_URL = "/checkout";
+const CHECKOUT_URL = "/buy";
 const SELO_URL = "https://barra.sistema.gov.br/v1/assets/govbr.webp";
 
 export default function PromoPage() {
