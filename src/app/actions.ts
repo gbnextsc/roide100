@@ -1,7 +1,6 @@
 'use server';
 
 import { z } from 'zod';
-import 'dotenv/config';
 
 const BuyerSchema = z.object({
   name: z.string(),
