@@ -7,7 +7,7 @@ import { Label } from '@/components/ui/label';
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import { Badge } from '@/components/ui/badge';
-import { Truck, ShoppingCart, Lock, QrCode, Copy, ShieldCheck, Microscope, PackageCheck, Star, Loader2 } from 'lucide-react';
+import { Truck, ShoppingCart, Lock, QrCode, Copy, ShieldCheck, Microscope, PackageCheck, Star, Loader2, CircleCheck } from 'lucide-react';
 import Image from 'next/image';
 import { useToast } from '@/hooks/use-toast';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
@@ -137,15 +137,18 @@ export default function CheckoutPage() {
   if (paymentStep === 'success') {
     return (
         <div className="flex items-center justify-center min-h-screen p-4" style={{ backgroundColor: '#0D1B2A' }}>
-            <Card className="w-full max-w-md text-center bg-white p-8">
-                <CardHeader>
-                    <CardTitle className="text-2xl font-bold text-green-600">Pedido confirmado!</CardTitle>
-                </CardHeader>
-                <CardContent>
-                    <p>Obrigado pela sua compra. Confira seu email, enviamos os detalhes do seu pedido. O código de rastreio será enviado em até 24h.</p>
-                     <Link href="/" passHref>
-                        <Button variant="link" className="mt-4">Voltar para a página inicial</Button>
-                    </Link>
+            <Card className="w-full max-w-md text-center bg-white p-8 shadow-2xl rounded-xl">
+                <CardContent className="pt-6">
+                    <div className="flex flex-col items-center justify-center space-y-4">
+                        <CircleCheck className="h-20 w-20 text-green-500" />
+                        <h2 className="text-2xl font-bold text-gray-800">Pedido Confirmado!</h2>
+                        <p className="text-gray-600">
+                            Obrigado pela sua confiança! Enviamos todos os detalhes do seu pedido para o seu e-mail. O código de rastreio será enviado em até 24 horas.
+                        </p>
+                        <Link href="/promo" passHref>
+                            <Button variant="link" className="mt-4 text-base">Voltar para a página inicial</Button>
+                        </Link>
+                    </div>
                 </CardContent>
             </Card>
         </div>
@@ -297,6 +300,7 @@ export default function CheckoutPage() {
                        <h3 className="text-xl font-bold">Pague com Pix para finalizar</h3>
                        <p className="text-sm text-muted-foreground">Escaneie o QR Code com seu app de pagamentos:</p>
                         {pixData && (
+                           <>
                             <Image
                                 src={`data:image/png;base64,${pixData.qrcode_base64}`}
                                 alt="QR Code Pix"
@@ -304,6 +308,11 @@ export default function CheckoutPage() {
                                 height={250}
                                 className="rounded-md border p-1"
                             />
+                             <div className="text-center">
+                                <p className="text-sm text-muted-foreground">Valor total:</p>
+                                <p className="text-2xl font-bold">{shippingCost ? `R$ ${shippingCost.toFixed(2)}` : ''}</p>
+                              </div>
+                           </>
                         )}
                         <p className="text-sm text-muted-foreground">Ou use o código copia e cola:</p>
                         <div className="w-full flex gap-2">
