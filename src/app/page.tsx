@@ -1,3 +1,4 @@
+'use client';
 
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -9,6 +10,7 @@ import { ArrowUp, ArrowRight, Star, Feather, Zap, Cookie, Contrast, LayoutGrid, 
 import Image from 'next/image';
 import Link from 'next/link';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+import React, { useState, useEffect } from 'react';
 
 
 export default function LandingPage() {
@@ -29,6 +31,32 @@ export default function LandingPage() {
       'Áudios', 'Apresentações', 'Imagens', 'Manual de Marcas do Ministério da Saúde', 'Publicações MS', 'Uso da Marca do Ministério da Saúde', 'Videos'
     ]
   };
+
+  const [showFloatingButton, setShowFloatingButton] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 100) {
+        setShowFloatingButton(false);
+      } else {
+        setShowFloatingButton(true);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
+  const handleScrollToAcquire = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const targetElement = document.getElementById('acquire-section');
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+  };
+
 
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
@@ -200,9 +228,16 @@ export default function LandingPage() {
         </section>
       </main>
 
-       <Link href="#acquire-section" className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 bg-primary/80 text-primary-foreground rounded-full p-3 animate-bounce hover:bg-primary backdrop-blur-sm">
-        <ChevronDown className="h-6 w-6" />
-      </Link>
+      {showFloatingButton && (
+        <Link 
+          href="#acquire-section" 
+          onClick={handleScrollToAcquire}
+          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 bg-primary/80 text-primary-foreground rounded-full p-3 animate-bounce hover:bg-primary backdrop-blur-sm"
+        >
+          <ChevronDown className="h-6 w-6" />
+        </Link>
+      )}
+
 
       <footer className="w-full bg-[#002a54] text-white py-12">
         <div className="container mx-auto px-4 md:px-6 relative">
@@ -251,5 +286,3 @@ export default function LandingPage() {
     </div>
   );
 }
-
-
