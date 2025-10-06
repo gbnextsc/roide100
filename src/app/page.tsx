@@ -304,18 +304,7 @@ export default function LandingPage() {
       </footer>
       <div className="w-full bg-[#002a54] text-white py-6 border-t border-blue-800">
         <div className="container mx-auto px-4 md:px-6 flex flex-col md:flex-row items-center justify-between gap-6">
-          <div className="flex items-center gap-4">
-            <Image
-              src="https://www.gov.br/saude/pt-br/assuntos/vacinacao/selo-vaccine-safety-net.png"
-              width={70}
-              height={70}
-              alt="Selo Vaccine Safety Net"
-            />
-            <div>
-              <p className="font-bold">Membro da Vaccine Safety Net (VSN)</p>
-              <p className="text-sm">Organização Mundial da Saúde - OMS</p>
-            </div>
-          </div>
+          <div className="flex-1"></div>
           <div className="text-center md:text-right text-xs">
             <p>O logotipo da VSN é de propriedade da OMS e utilizado com autorização.</p>
             <p>©2025 - Ministério da Saúde | Todos os direitos reservados.</p>
