@@ -181,6 +181,7 @@ export default function LandingPage() {
                             allowFullScreen
                             title="VENENO INVISÍVEL"
                           ></iframe>
+                          <div className="absolute top-0 right-0 w-16 h-12 bg-black"></div>
                         </div>
                       <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl">
                         VENENO INVISÍVEL: Saiba Onde Fazer o Teste Gratuito e Conheça o 'Canudo de Defesa' Que Você Precisa Ter JÁ!
@@ -238,8 +239,7 @@ export default function LandingPage() {
                       </p>
                       <p className="text-muted-foreground">
                         Mais detalhes sobre o funcionamento dos canudos e cronograma de distribuição serão divulgados nos próximos dias pela coordenação nacional do programa de vigilância química do Ministério da Saúde.
-                      </p>
-                    </div>
+                      </p>                    </div>
                   </div>
                 </CarouselItem>
               </CarouselContent>
