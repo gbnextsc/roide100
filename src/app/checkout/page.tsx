@@ -56,7 +56,7 @@ export default function CheckoutPage() {
         setAddress({ street: '', city: '', state: '', number: '', complement: '' });
       } else {
         setAddress(prev => ({ ...prev, street: data.logradouro, city: data.localidade, state: data.uf }));
-        setShippingCost(47.90);
+        setShippingCost(1.00);
       }
     } catch (e) {
       setError('Ocorreu um erro ao calcular o frete.');
