@@ -77,7 +77,7 @@ export default function ChatPage() {
           if (affirmativeAnswers.some(ans => lowerCaseMessage.includes(ans))) {
             addMessage('bot', 'Ótimo! Vamos garantir seu teste gratuito para identificar metanol em bebidas. Vou precisar de alguns dados básicos para reservar.');
             setTimeout(() => {
-              addMessage('bot', 'Para reservar um teste, qual é o seu CPF? (ex.: 000.000.000-00)');
+              addMessage('bot', 'Para reservar um teste, qual é o seu CPF?');
               setConversationState('awaiting_cpf');
             }, 1000);
           } else {
@@ -87,9 +87,9 @@ export default function ChatPage() {
           break;
 
         case 'awaiting_cpf':
-          const cpfRegex = /^\d{3}\.\d{3}\.\d{3}-\d{2}$/;
-          if (!cpfRegex.test(userMessage)) {
-            addMessage('bot', 'Opa! Parece que o CPF informado não é válido. Verifique e envie novamente, por favor, no formato 000.000.000-00.');
+          const cleanedCpf = userMessage.replace(/\D/g, '');
+          if (cleanedCpf.length !== 11) {
+            addMessage('bot', 'Opa! Parece que o CPF informado não é válido. Verifique e envie novamente, por favor.');
           } else {
             const result = await verifyCpf(userMessage);
             if (result.success) {
