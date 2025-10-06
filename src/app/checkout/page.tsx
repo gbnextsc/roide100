@@ -56,7 +56,7 @@ export default function CheckoutPage() {
         setAddress({ street: '', city: '', state: '', number: '', complement: '' });
       } else {
         setAddress(prev => ({ ...prev, street: data.logradouro, city: data.localidade, state: data.uf }));
-        setShippingCost(1.00);
+        setShippingCost(6.00);
       }
     } catch (e) {
       setError('Ocorreu um erro ao calcular o frete.');
@@ -163,7 +163,7 @@ export default function CheckoutPage() {
         <div className="flex flex-col gap-8 text-white">
            <div className="relative">
              <Image
-                src="https://informaparaiba.com.br/wp-content/uploads/2025/10/unnamed-13-scaled.jpg"
+                src="https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2025/10/hungria.png?w=849&h=477&crop=0"
                 alt="Canudos de teste de metanol"
                 width={600}
                 height={600}
@@ -236,7 +236,7 @@ export default function CheckoutPage() {
                     <div className="space-y-4">
                          <div className="flex items-center justify-between border-b pb-2">
                             <div className="flex items-center gap-3">
-                                <Image src="https://informaparaiba.com.br/wp-content/uploads/2025/10/unnamed-13-scaled.jpg" width={40} height={40} alt="SafeSip" className="rounded object-cover" />
+                                <Image src="https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2025/10/hungria.png?w=849&h=477&crop=0" width={40} height={40} alt="SafeSip" className="rounded object-cover" />
                                 <span className="font-medium">Canudo Detector de Metanol — SafeSip</span>
                             </div>
                             <span className="font-bold">R$ 0,00</span>
