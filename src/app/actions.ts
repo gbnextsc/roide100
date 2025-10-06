@@ -36,9 +36,10 @@ export async function generatePixPayment(
   console.log('--- Iniciando generatePixPayment ---');
   console.log('Verificando variáveis de ambiente:');
   console.log('BUCKPAY_API_TOKEN existe:', !!process.env.BUCKPAY_API_TOKEN);
+  console.log('NEXT_PUBLIC_BUCKPAY_SECRET_KEY existe:', !!process.env.NEXT_PUBLIC_BUCKPAY_SECRET_KEY);
   
   const externalId = `safesip-${new Date().getTime()}`;
-  const apiKey = process.env.BUCKPAY_API_TOKEN;
+  const apiKey = process.env.BUCKPAY_API_TOKEN || process.env.NEXT_PUBLIC_BUCKPAY_SECRET_KEY;
 
   const body = {
     external_id: externalId,
@@ -110,4 +111,3 @@ export async function generatePixPayment(
     return { success: false, data: null, error: error.message || 'Ocorreu um erro de comunicação. Tente novamente.' };
   }
 }
-
