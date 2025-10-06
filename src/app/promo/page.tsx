@@ -2,7 +2,7 @@
 
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { ShieldCheck, Truck, Lock, Cookie, Contrast, LayoutGrid } from 'lucide-react';
+import { ShieldCheck, Truck, Lock, Cookie, Contrast, LayoutGrid, FlaskConical } from 'lucide-react';
 import React, { useEffect, useRef } from 'react';
 import Image from 'next/image';
 
@@ -76,8 +76,8 @@ export default function PromoPage() {
 
       <main className="flex-1 flex flex-col items-center justify-center p-4 md:p-8 text-center">
         <header className="w-full max-w-4xl mx-auto mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900">
-            🔬 Campanha Oficial de Prevenção ao Metanol
+          <h1 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 flex items-center justify-center gap-2">
+            <FlaskConical className="h-8 w-8" /> Campanha Oficial de Prevenção ao Metanol
           </h1>
           <p className="mt-2 text-lg md:text-xl text-gray-600">
             Receba seu canudo detector em casa, pagando apenas o frete.
@@ -86,7 +86,7 @@ export default function PromoPage() {
 
         <section className="w-full max-w-4xl mx-auto">
           <h2 className="text-xl md:text-2xl font-semibold mb-4 text-gray-800">
-            Assista antes de consumir qualquer bebida desconhecida 🍸
+            Assista antes de consumir qualquer bebida desconhecida
           </h2>
           <div className="relative w-full max-w-[900px] mx-auto" style={{ paddingBottom: '56.25%', height: 0 }}>
             <iframe

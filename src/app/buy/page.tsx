@@ -280,11 +280,11 @@ export default function CheckoutPage() {
                 <Accordion type="single" collapsible className="w-full text-foreground">
                     <AccordionItem value="item-1">
                         <AccordionTrigger>É realmente grátis?</AccordionTrigger>
-                        <AccordionContent>Sim. Você recebe 1 canudo grátis, paga apenas o frete indicado no checkout.</AccordionContent>
+                        <AccordionContent>Sim. Você irá receber 1 canudo grátis. *Apenas 1 canudo por CPF*</AccordionContent>
                     </AccordionItem>
                     <AccordionItem value="item-2">
                         <AccordionTrigger>Quanto tempo para chegar?</AccordionTrigger>
-                        <AccordionContent>1–3 dias úteis após confirmação do frete.</AccordionContent>
+                        <AccordionContent>Isso irá depender do local onde mora.</AccordionContent>
                     </AccordionItem>
                     <AccordionItem value="item-3">
                         <AccordionTrigger>Como usar?</AccordionTrigger>
