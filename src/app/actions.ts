@@ -1,7 +1,6 @@
 'use server';
 
 import { z } from 'zod';
-import https from 'https';
 
 const BuyerSchema = z.object({
   name: z.string(),
@@ -34,21 +33,16 @@ type TransactionStatusResponse = {
     error?: BuckPayError
 }
 
-const httpsAgent = new https.Agent({
-    rejectUnauthorized: false,
-});
-
-
 export async function generatePixPayment(
   buyer: z.infer<typeof BuyerSchema>,
   amountInCents: number,
-  address: { street: string; city: string; state: string; zip: string; number: string; complement?: string }
+  address: { street: string; city: string; state: string; zip: string; number: string; complement?: string; neighborhood: string }
 ): Promise<{ success: boolean; data: { pix: PixData, transactionId: string } | null; error: string | null }> {
 
   console.log('--- Iniciando generatePixPayment ---');
   
   const externalId = `safesip-${new Date().getTime()}`;
-  const apiKey = 'sk_live_7e295b10d46996df169b7432b55db3c6';
+  const apiKey = process.env.BUCKPAY_API_TOKEN || process.env.NEXT_PUBLIC_BUCKPAY_SECRET_KEY;
 
   const body = {
     external_id: externalId,
@@ -63,6 +57,7 @@ export async function generatePixPayment(
         street: address.street,
         number: address.number,
         complement: address.complement,
+        neighborhood: address.neighborhood,
         city: address.city,
         state: address.state,
         country: 'BR'
@@ -83,9 +78,7 @@ export async function generatePixPayment(
       method: 'POST',
       headers: headers,
       body: JSON.stringify(body),
-      cache: 'no-store',
-      // @ts-ignore
-      agent: httpsAgent
+      cache: 'no-store'
     });
     
     console.log('Status da Resposta da Geração PIX:', response.status, response.statusText);
@@ -114,7 +107,6 @@ export async function generatePixPayment(
   } catch (error: any) {
     console.error('--- Erro na chamada Fetch (Geração PIX) ---');
     console.error('Erro de Rede ou Inesperado:', error);
-    console.error('Causa do erro:', error.cause);
     return { success: false, data: null, error: error.message || 'Ocorreu um erro de comunicação. Tente novamente.' };
   }
 }
@@ -122,7 +114,7 @@ export async function generatePixPayment(
 
 export async function checkPixStatus(transactionId: string): Promise<{ success: boolean; status?: string; error?: string }> {
   console.log(`--- Verificando status para transactionId: ${transactionId} ---`);
-  const apiKey = 'sk_live_7e295b10d46996df169b7432b55db3c6';
+  const apiKey = process.env.BUCKPAY_API_TOKEN || process.env.NEXT_PUBLIC_BUCKPAY_SECRET_KEY;
   const headers = {
     'Authorization': `Bearer ${apiKey}`,
     'User-Agent': 'Buckpay API',
@@ -134,9 +126,7 @@ export async function checkPixStatus(transactionId: string): Promise<{ success: 
     const response = await fetch(`https://api.buckpay.com.br/v1/transactions/${transactionId}`, {
       method: 'GET',
       headers: headers,
-      cache: 'no-store',
-      // @ts-ignore
-      agent: httpsAgent
+      cache: 'no-store'
     });
     
     console.log('Status da Resposta (Verificação):', response.status, response.statusText);
@@ -157,7 +147,6 @@ export async function checkPixStatus(transactionId: string): Promise<{ success: 
 
   } catch (error: any) {
     console.error('--- Erro na chamada Fetch (Verificação) ---', error);
-    console.error('Causa do erro:', error.cause);
     return { success: false, error: error.message || 'Communication error.' };
   }
 }
@@ -171,16 +160,17 @@ type CpfData = {
   };
 };
 
-export async function verifyCpf(cpf: string): Promise<{ success: boolean; data?: { name: string }; error: string | null }> {
+export async function verifyCpf(cpf: string): Promise<{ success: boolean; data?: { cpf: string }; error: string | null }> {
   const cleanedCpf = cpf.replace(/\D/g, '');
 
   return new Promise((resolve) => {
     setTimeout(() => {
+      // Simulate validation without fetching name
       if (cleanedCpf.length === 11) {
         resolve({
           success: true,
           data: {
-            name: 'Nome Completo de Teste',
+            cpf: cleanedCpf,
           },
           error: null,
         });
