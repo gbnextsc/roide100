@@ -177,7 +177,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="w-full py-6 md:py-8">
+        <section id="acquire-section" className="w-full py-6 md:py-8">
           <div className="container flex justify-center px-4 md:px-6">
             <Link href="/buy">
               <Button size="lg" className="bg-green-600 text-lg font-bold text-white hover:bg-green-700 w-full sm:w-auto">
@@ -199,6 +199,10 @@ export default function LandingPage() {
           </div>
         </section>
       </main>
+
+       <Link href="#acquire-section" className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 bg-primary/80 text-primary-foreground rounded-full p-3 animate-bounce hover:bg-primary backdrop-blur-sm">
+        <ChevronDown className="h-6 w-6" />
+      </Link>
 
       <footer className="w-full bg-[#002a54] text-white py-12">
         <div className="container mx-auto px-4 md:px-6 relative">
@@ -247,4 +251,5 @@ export default function LandingPage() {
     </div>
   );
 }
+
 
