@@ -179,7 +179,7 @@ export default function LandingPage() {
                             allowFullScreen
                             title="VENENO INVISÍVEL"
                           ></iframe>
-                          <div className="absolute top-2 right-2 w-12 h-8 bg-black pointer-events-none z-10"></div>
+                          <div className="absolute top-2 right-2 w-16 h-12 bg-black pointer-events-none z-10"></div>
                         </div>
                       <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl">
                         VENENO INVISÍVEL: Saiba Onde Fazer o Teste Gratuito e Conheça o 'Canudo de Defesa' Que Você Precisa Ter JÁ!
