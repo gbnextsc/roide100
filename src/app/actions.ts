@@ -26,11 +26,18 @@ type PixResponse = {
   error?: BuckPayError;
 };
 
+type TransactionStatusResponse = {
+    data?: {
+        status: string;
+    },
+    error?: BuckPayError
+}
+
 export async function generatePixPayment(
   buyer: z.infer<typeof BuyerSchema>,
   amountInCents: number,
   address: { street: string; city: string; state: string; zip: string; number: string; complement?: string }
-): Promise<{ success: boolean; data: PixData | null; error: string | null }> {
+): Promise<{ success: boolean; data: { pix: PixData, transactionId: string } | null; error: string | null }> {
 
   console.log('--- Iniciando generatePixPayment ---');
   console.log('Verificando variáveis de ambiente:');
@@ -93,9 +100,9 @@ export async function generatePixPayment(
       return { success: false, data: null, error: errorMessage };
     }
 
-    if (result.data?.pix) {
+    if (result.data?.pix && result.data.id) {
       console.log('Pagamento PIX gerado com sucesso.');
-      return { success: true, data: result.data.pix, error: null };
+      return { success: true, data: { pix: result.data.pix, transactionId: result.data.id }, error: null };
     }
 
     return { success: false, data: null, error: 'Resposta inválida da API de pagamento.' };
@@ -103,5 +110,34 @@ export async function generatePixPayment(
     console.error('--- Erro na chamada Fetch ---');
     console.error('Erro de Rede ou Inesperado:', error);
     return { success: false, data: null, error: error.message || 'Ocorreu um erro de comunicação. Tente novamente.' };
+  }
+}
+
+
+export async function checkPixStatus(transactionId: string): Promise<{ success: boolean; status?: string; error?: string }> {
+  const apiKey = process.env.BUCKPAY_API_TOKEN || process.env.NEXT_PUBLIC_BUCKPAY_SECRET_KEY;
+  const headers = {
+    'Authorization': `Bearer ${apiKey}`,
+    'User-Agent': 'Buckpay API',
+  };
+
+  try {
+    const response = await fetch(`https://api.realtechdev.com.br/v1/transactions/${transactionId}`, {
+      method: 'GET',
+      headers: headers,
+      cache: 'no-store'
+    });
+
+    const result: TransactionStatusResponse = await response.json();
+    
+    if (!response.ok || result.error) {
+        return { success: false, error: result.error?.message || `API Error: ${response.statusText}` };
+    }
+
+    return { success: true, status: result.data?.status };
+
+  } catch (error: any) {
+    console.error('Error checking PIX status:', error);
+    return { success: false, error: error.message || 'Communication error.' };
   }
 }

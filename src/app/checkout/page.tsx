@@ -5,13 +5,13 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/com
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import Link from 'next/link';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Badge } from '@/components/ui/badge';
 import { Truck, ShoppingCart, Lock, QrCode, Copy, ShieldCheck, Microscope, PackageCheck, Star, Loader2, CircleCheck } from 'lucide-react';
 import Image from 'next/image';
 import { useToast } from '@/hooks/use-toast';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { generatePixPayment } from '@/app/actions';
+import { generatePixPayment, checkPixStatus } from '@/app/actions';
 
 export default function CheckoutPage() {
   const [cep, setCep] = useState('');
@@ -21,15 +21,43 @@ export default function CheckoutPage() {
   const [showFreebieAlert, setShowFreebieAlert] = useState(false);
   const [paymentStep, setPaymentStep] = useState<'form' | 'pix' | 'success'>('form');
   const [pixData, setPixData] = useState<{ code: string; qrcode_base64: string } | null>(null);
+  const [transactionId, setTransactionId] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const timer = setTimeout(() => {
       setShowFreebieAlert(true);
     }, 500);
-    return () => clearTimeout(timer);
+    return () => {
+      clearTimeout(timer);
+       if (pollingIntervalRef.current) {
+        clearInterval(pollingIntervalRef.current);
+      }
+    };
   }, []);
+
+  // Effect to poll for payment status
+  useEffect(() => {
+    if (paymentStep === 'pix' && transactionId) {
+      pollingIntervalRef.current = setInterval(async () => {
+        const result = await checkPixStatus(transactionId);
+        if (result.success && result.status === 'paid') {
+          setPaymentStep('success');
+          if (pollingIntervalRef.current) {
+            clearInterval(pollingIntervalRef.current);
+          }
+        }
+      }, 4000);
+    }
+
+    return () => {
+      if (pollingIntervalRef.current) {
+        clearInterval(pollingIntervalRef.current);
+      }
+    };
+  }, [paymentStep, transactionId]);
 
   const handleCepChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value.replace(/\D/g, '');
@@ -114,7 +142,8 @@ export default function CheckoutPage() {
         const result = await generatePixPayment(buyer, amountInCents, fullAddress);
 
         if (result.success && result.data) {
-            setPixData(result.data);
+            setPixData(result.data.pix);
+            setTransactionId(result.data.transactionId);
             setPaymentStep('pix');
         } else {
             toast({
@@ -163,7 +192,7 @@ export default function CheckoutPage() {
         <div className="flex flex-col gap-8 text-white">
            <div className="relative">
              <Image
-                src="https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2025/10/hungria.png?w=849&h=477&crop=0"
+                src="https://informaparaiba.com.br/wp-content/uploads/2025/10/unnamed-13-scaled.jpg"
                 alt="Canudos de teste de metanol"
                 width={600}
                 height={600}
@@ -236,7 +265,7 @@ export default function CheckoutPage() {
                     <div className="space-y-4">
                          <div className="flex items-center justify-between border-b pb-2">
                             <div className="flex items-center gap-3">
-                                <Image src="https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2025/10/hungria.png?w=849&h=477&crop=0" width={40} height={40} alt="SafeSip" className="rounded object-cover" />
+                                <Image src="https://informaparaiba.com.br/wp-content/uploads/2025/10/unnamed-13-scaled.jpg" width={40} height={40} alt="SafeSip" className="rounded object-cover" />
                                 <span className="font-medium">Canudo Detector de Metanol — SafeSip</span>
                             </div>
                             <span className="font-bold">R$ 0,00</span>
@@ -298,7 +327,7 @@ export default function CheckoutPage() {
                  ) : (
                     <div className="flex flex-col items-center gap-4 text-center">
                        <h3 className="text-xl font-bold">Pague com Pix para finalizar</h3>
-                       <p className="text-sm text-muted-foreground">Escaneie o QR Code com seu app de pagamentos:</p>
+                       <p className="text-sm text-muted-foreground">Escaneie o QR Code ou copie o código. O pedido será confirmado automaticamente após o pagamento.</p>
                         {pixData && (
                            <>
                             <Image
@@ -321,7 +350,10 @@ export default function CheckoutPage() {
                                 <Copy className="h-4 w-4"/>
                             </Button>
                         </div>
-                        <Button onClick={() => setPaymentStep('success')} className="w-full bg-green-600 hover:bg-green-700">Já paguei, confirmar pedido</Button>
+                        <div className='flex flex-col items-center justify-center gap-2 pt-2'>
+                          <Loader2 className="h-4 w-4 animate-spin"/>
+                          <p className='text-sm text-muted-foreground'>Aguardando pagamento...</p>
+                        </div>
                         <Button variant="link" onClick={() => setPaymentStep('form')}>Voltar e editar dados</Button>
                     </div>
                  )}
