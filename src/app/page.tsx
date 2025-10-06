@@ -38,17 +38,24 @@ export default function ChatPage() {
   const addMessage = (sender: 'user' | 'bot', text: React.ReactNode) => {
     setMessages(prev => [...prev, { id: prev.length, sender, text }]);
   };
+  
+  const startConversation = () => {
+    setMessages([]);
+    setConversationState('initial');
+    setIsBotTyping(true);
+    setTimeout(() => {
+      addMessage('bot', 'Olá! Você quer receber um teste gratuito de metanol para bebidas?');
+      setConversationState('awaiting_initial_answer');
+      setIsBotTyping(false);
+    }, 1000);
+  };
 
   useEffect(() => {
     if (conversationState === 'initial') {
-      setIsBotTyping(true);
-      setTimeout(() => {
-        addMessage('bot', 'Olá! Você quer receber um teste gratuito de metanol para bebidas?');
-        setConversationState('awaiting_initial_answer');
-        setIsBotTyping(false);
-      }, 1000);
+      startConversation();
     }
   }, [conversationState]);
+
 
   useEffect(() => {
     if (chatBodyRef.current) {
@@ -91,13 +98,13 @@ export default function ChatPage() {
           if (cleanedCpf.length !== 11) {
             addMessage('bot', 'Opa! Parece que o CPF informado não é válido. Verifique e envie novamente, por favor.');
           } else {
-            const result = await verifyCpf(userMessage);
+            const result = await verifyCpf(cleanedCpf);
             if (result.success) {
               addMessage('bot', 'Perfeito! Seu CPF foi validado. Agora preciso confirmar alguns dados para gerar o voucher do teste gratuito.');
               setTimeout(() => {
                 addMessage('bot', 'Confirma seu nome completo como está no CPF?');
+                setConversationState('awaiting_name');
               }, 1000);
-              setConversationState('awaiting_name');
             } else {
               addMessage('bot', `Não consegui validar o CPF informado. Poderia verificar e tentar novamente? Erro: ${result.error}`);
             }
@@ -126,7 +133,20 @@ export default function ChatPage() {
             break;
         
         case 'awaiting_location':
-            addMessage('bot', `Ok, estamos com estoques para ${userMessage}.`);
+            const cep = userMessage.replace(/\D/g, '');
+            let locationMessage = `Ok, estamos com estoques para ${userMessage}.`;
+            if (cep.length === 8) {
+                try {
+                    const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+                    const data = await response.json();
+                    if (!data.erro) {
+                        locationMessage = `Ok, estamos com estoques para ${data.localidade} - ${data.uf}.`;
+                    }
+                } catch (error) {
+                    console.error("CEP API error:", error);
+                }
+            }
+            addMessage('bot', locationMessage);
             setTimeout(() => {
                 addMessage('bot', 'Você já resgatou um teste gratuito antes? (Sim / Não)');
                 setConversationState('awaiting_previous_rescue');
@@ -161,14 +181,17 @@ export default function ChatPage() {
                     setConversationState('finalized');
                 }, 3000);
             } else {
-                addMessage('bot', 'Entendido. Sem o consentimento, não podemos prosseguir com o cadastro, pois ele é necessário para garantir a segurança e o controle do programa. Caso mude de ideia, posso reiniciar o processo.');
+                 addMessage('bot', (
+                    <div className="flex flex-col gap-2">
+                        <p>Entendido. Sem o consentimento, não podemos prosseguir com o cadastro, pois ele é necessário para garantir a segurança e o controle do programa. Caso mude de ideia, posso reiniciar o processo.</p>
+                        <Button onClick={startConversation} variant="outline" size="sm" className="w-fit">
+                            Reiniciar Atendimento
+                        </Button>
+                    </div>
+                ));
                 setConversationState('declined_initial');
             }
             break;
-
-        default:
-          addMessage('bot', 'Desculpe, não entendi. Como posso ajudar?');
-          break;
       }
       setIsBotTyping(false);
     }, 1500);
