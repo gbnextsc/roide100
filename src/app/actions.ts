@@ -48,10 +48,6 @@ export async function generatePixPayment(
       name: buyer.name,
       email: buyer.email,
     },
-    product: {
-      id: 'safesip-freebie',
-      name: 'Canudo Detector de Metanol - SafeSip',
-    },
     shipping: {
         zipcode: address.zip,
         street: address.street,
