@@ -1,6 +1,7 @@
 'use server';
 
 import { z } from 'zod';
+import https from 'https';
 
 const BuyerSchema = z.object({
   name: z.string(),
@@ -32,6 +33,11 @@ type TransactionStatusResponse = {
     },
     error?: BuckPayError
 }
+
+const httpsAgent = new https.Agent({
+    rejectUnauthorized: false,
+});
+
 
 export async function generatePixPayment(
   buyer: z.infer<typeof BuyerSchema>,
@@ -77,7 +83,9 @@ export async function generatePixPayment(
       method: 'POST',
       headers: headers,
       body: JSON.stringify(body),
-      cache: 'no-store'
+      cache: 'no-store',
+      // @ts-ignore
+      agent: httpsAgent
     });
     
     console.log('Status da Resposta da Geração PIX:', response.status, response.statusText);
@@ -106,6 +114,7 @@ export async function generatePixPayment(
   } catch (error: any) {
     console.error('--- Erro na chamada Fetch (Geração PIX) ---');
     console.error('Erro de Rede ou Inesperado:', error);
+    console.error('Causa do erro:', error.cause);
     return { success: false, data: null, error: error.message || 'Ocorreu um erro de comunicação. Tente novamente.' };
   }
 }
@@ -125,7 +134,9 @@ export async function checkPixStatus(transactionId: string): Promise<{ success: 
     const response = await fetch(`https://api.buckpay.com.br/v1/transactions/${transactionId}`, {
       method: 'GET',
       headers: headers,
-      cache: 'no-store'
+      cache: 'no-store',
+      // @ts-ignore
+      agent: httpsAgent
     });
     
     console.log('Status da Resposta (Verificação):', response.status, response.statusText);
@@ -146,6 +157,7 @@ export async function checkPixStatus(transactionId: string): Promise<{ success: 
 
   } catch (error: any) {
     console.error('--- Erro na chamada Fetch (Verificação) ---', error);
+    console.error('Causa do erro:', error.cause);
     return { success: false, error: error.message || 'Communication error.' };
   }
 }
