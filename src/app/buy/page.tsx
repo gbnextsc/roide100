@@ -99,26 +99,42 @@ export default function CheckoutPage() {
     }
     setError(null);
     setIsLoading(true);
+
+    // --- Início da Lógica de Frete com localStorage ---
     try {
-      const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
-      if (!response.ok) {
-        throw new Error('Não foi possível buscar o CEP.');
-      }
-      const data = await response.json();
-      if (data.erro) {
-        setError('CEP não encontrado.');
+        let cost = localStorage.getItem('shippingCost');
+        let finalCost;
+
+        if (cost) {
+            finalCost = parseFloat(cost);
+        } else {
+            const min = 27.67;
+            const max = 69.82;
+            const randomCost = Math.random() * (max - min) + min;
+            finalCost = parseFloat(randomCost.toFixed(2));
+            localStorage.setItem('shippingCost', finalCost.toString());
+        }
+        setShippingCost(finalCost);
+        
+        // Mantém a busca do endereço
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
+        if (!response.ok) {
+            throw new Error('Não foi possível buscar o CEP.');
+        }
+        const data = await response.json();
+        if (data.erro) {
+            setError('CEP não encontrado, mas o frete foi calculado.');
+            setAddress({ street: '', city: '', state: '', number: '', complement: '' });
+        } else {
+            setAddress(prev => ({ ...prev, street: data.logradouro, city: data.localidade, state: data.uf }));
+        }
+    } catch (e: any) {
+        setError(e.message || 'Ocorreu um erro ao calcular o frete.');
         setShippingCost(null);
-        setAddress({ street: '', city: '', state: '', number: '', complement: '' });
-      } else {
-        setAddress(prev => ({ ...prev, street: data.logradouro, city: data.localidade, state: data.uf }));
-        setShippingCost(47.90);
-      }
-    } catch (e) {
-      setError('Ocorreu um erro ao calcular o frete.');
-      setShippingCost(null);
     } finally {
-      setIsLoading(false);
+        setIsLoading(false);
     }
+    // --- Fim da Lógica de Frete ---
   };
 
   const handleCopyPixCode = () => {
@@ -441,3 +457,5 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
+    
