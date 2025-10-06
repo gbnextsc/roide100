@@ -161,7 +161,7 @@ export default function CheckoutPage() {
         <div className="flex flex-col gap-8 text-white">
            <div className="relative">
              <Image
-                src="https://storage.googleapis.com/gemini-studio-main-images/a6c50711-8e7c-4217-a066-1049b49b2513.jpeg"
+                src="https://storage.googleapis.com/gemini-studio-main-images/34292198-d8f9-4bb9-adec-b06883a8080f.png"
                 alt="Canudo Detector de Metanol SafeSip"
                 width={600}
                 height={600}
@@ -206,7 +206,7 @@ export default function CheckoutPage() {
               <AccordionItem value="item-2">
                 <AccordionTrigger>Quanto tempo para chegar?</AccordionTrigger>
                 <AccordionContent>3–7 dias úteis após confirmação do frete.</AccordionContent>
-              </AccordionItem>
+              </A'cordionItem>
               <AccordionItem value="item-3">
                 <AccordionTrigger>Como usar?</AccordionTrigger>
                 <AccordionContent>Encoste o canudo na bebida, aguarde 10s e compare com a escala de cor inclusa.</AccordionContent>
@@ -234,7 +234,7 @@ export default function CheckoutPage() {
                     <div className="space-y-4">
                          <div className="flex items-center justify-between border-b pb-2">
                             <div className="flex items-center gap-3">
-                                <Image src="https://storage.googleapis.com/gemini-studio-main-images/a6c50711-8e7c-4217-a066-1049b49b2513.jpeg" width={40} height={40} alt="SafeSip" className="rounded" />
+                                <Image src="https://storage.googleapis.com/gemini-studio-main-images/34292198-d8f9-4bb9-adec-b06883a8080f.png" width={40} height={40} alt="SafeSip" className="rounded" />
                                 <span className="font-medium">Canudo Detector de Metanol — SafeSip</span>
                             </div>
                             <span className="font-bold">R$ 0,00</span>
