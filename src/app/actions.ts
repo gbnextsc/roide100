@@ -159,23 +159,26 @@ type CpfData = {
   };
 };
 
-export async function verifyCpf(cpf: string): Promise<{ success: boolean; data: CpfData | null; error: string | null }> {
+export async function verifyCpf(cpf: string): Promise<{ success: boolean; data?: { cpf: string }; error: string | null }> {
   const cleanedCpf = cpf.replace(/\D/g, '');
 
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve({
-        success: true,
-        data: {
-          cpf: cleanedCpf,
-          nome: 'Nome Completo de Teste',
-          situacao: {
-            codigo: 'REGULAR',
-            descricao: 'Regular',
+      // Simulate validation without fetching name
+      if (cleanedCpf.length === 11) {
+        resolve({
+          success: true,
+          data: {
+            cpf: cleanedCpf,
           },
-        },
-        error: null,
-      });
-    }, 500); // Simula um pequeno delay de rede
+          error: null,
+        });
+      } else {
+        resolve({
+          success: false,
+          error: "CPF inválido",
+        });
+      }
+    }, 500);
   });
 }
