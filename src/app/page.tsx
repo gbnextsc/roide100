@@ -22,7 +22,7 @@ export default function ChatPage() {
         <div className="p-4 bg-gray-50 border-b flex justify-between items-center">
           <div className="flex items-center gap-3">
             <Image
-              src="https://i.ibb.co/L6xK2b3/govbr-logo-chat.png"
+              src="https://www.gov.br/governodigital/pt-br/acessibilidade-e-usuario/atendimento-gov.br/imagens/avatar-icon.png"
               alt="Logo Gov.br"
               width={40}
               height={40}
