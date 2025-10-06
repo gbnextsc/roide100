@@ -149,3 +149,43 @@ export async function checkPixStatus(transactionId: string): Promise<{ success: 
     return { success: false, error: error.message || 'Communication error.' };
   }
 }
+
+type CpfData = {
+  cpf: string;
+  nome: string;
+  situacao: {
+    codigo: string;
+    descricao: string;
+  };
+};
+
+export async function verifyCpf(cpf: string): Promise<{ success: boolean; data: CpfData | null; error: string | null }> {
+  const cleanedCpf = cpf.replace(/\D/g, '');
+  
+  try {
+    const response = await fetch(`https://api.nfse.io/validate/CPF/${cleanedCpf}`, {
+      method: 'GET',
+      cache: 'no-store'
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        return { success: false, data: null, error: `API Error: ${response.status} ${response.statusText} - ${errorText}` };
+    }
+    
+    const result = await response.json();
+
+    if (result.error) {
+        return { success: false, data: null, error: result.error_description || 'CPF inválido ou não encontrado.' };
+    }
+
+    if (result.cpf && result.nome) {
+        return { success: true, data: result as CpfData, error: null };
+    }
+
+    return { success: false, data: null, error: 'Resposta inválida da API de CPF.' };
+
+  } catch (error: any) {
+    return { success: false, data: null, error: error.message || 'Ocorreu um erro de comunicação ao validar o CPF.' };
+  }
+}
