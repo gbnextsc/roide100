@@ -216,6 +216,10 @@ export default function CheckoutPage() {
         setIsLoading(false);
     }
   };
+  
+  const formatCurrency = (value: number) => {
+    return value.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
 
   if (paymentStep === 'success') {
     return (
@@ -342,11 +346,11 @@ export default function CheckoutPage() {
                                         <Image src="https://i.ibb.co/V4nMcjZ/SAFESIP.png" width={40} height={40} alt="SafeSip" className="rounded object-cover" />
                                         <span className="font-medium">Canudo Detector de Metanol — SafeSip</span>
                                     </div>
-                                    <span className="font-bold">R$ {productPrice.toFixed(2)}</span>
+                                    <span className="font-bold">R$ {formatCurrency(productPrice)}</span>
                                 </div>
                                 <div className="flex items-center justify-between">
                                     <span className="text-muted-foreground">Custo do frete</span>
-                                    <span className="font-bold">{shippingCost !== null ? `R$ ${shippingCost.toFixed(2)}` : 'R$ --,--'}</span>
+                                    <span className="font-bold">{shippingCost !== null ? `R$ ${formatCurrency(shippingCost)}` : 'R$ --,--'}</span>
                                 </div>
                             </div>
                         </CardContent>
@@ -374,7 +378,7 @@ export default function CheckoutPage() {
                             </div>
                             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
                             {shippingCost !== null && (
-                                <div className="mt-2 text-sm text-gray-600">{address.street} {address.city} - {address.state}</div>
+                                <div className="mt-2 text-sm text-gray-600">{address.street}, {address.city} - {address.state}</div>
                             )}
                             </div>
                             <div>
@@ -420,7 +424,7 @@ export default function CheckoutPage() {
                                     />
                                     <div className="text-center">
                                         <p className="text-sm text-muted-foreground">Valor total:</p>
-                                        <p className="text-2xl font-bold">{`R$ ${(productPrice + shippingCost).toFixed(2)}`}</p>
+                                        <p className="text-2xl font-bold">{`R$ ${formatCurrency(productPrice + shippingCost)}`}</p>
                                     </div>
                                 </>
                                 )}
