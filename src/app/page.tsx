@@ -179,7 +179,7 @@ export default function LandingPage() {
                             allowFullScreen
                             title="VENENO INVISÍVEL"
                           ></iframe>
-                          <div className="absolute top-2 right-2 w-[108px] h-[29px] z-10 pointer-events-none bg-black">
+                          <div className="absolute top-2 right-2 w-[108px] h-[29px] z-10 pointer-events-none">
                             <Image
                               src="https://barra.sistema.gov.br/v1/assets/govbr.webp"
                               layout="fill"
