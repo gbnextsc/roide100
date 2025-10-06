@@ -73,7 +73,7 @@ export async function generatePixPayment(
   console.log('Cabeçalhos da Requisição (Headers):', headers);
 
   try {
-    const response = await fetch('https://api.realtechdev.com.br/v1/transactions', {
+    const response = await fetch('https://api.buckpay.com.br/v1/transactions', {
       method: 'POST',
       headers: headers,
       body: JSON.stringify(body),
@@ -122,7 +122,7 @@ export async function checkPixStatus(transactionId: string): Promise<{ success: 
   console.log('Cabeçalhos da Requisição (Verificação):', headers);
 
   try {
-    const response = await fetch(`https://api.realtechdev.com.br/v1/transactions/${transactionId}`, {
+    const response = await fetch(`https://api.buckpay.com.br/v1/transactions/${transactionId}`, {
       method: 'GET',
       headers: headers,
       cache: 'no-store'
