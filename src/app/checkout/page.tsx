@@ -1,3 +1,4 @@
+
 'use client';
 
 import { Button } from '@/components/ui/button';
@@ -160,7 +161,7 @@ export default function CheckoutPage() {
         <div className="flex flex-col gap-8 text-white">
            <div className="relative">
              <Image
-                src="https://storage.googleapis.com/gemini-studio-main-images/343c9842-8356-4299-813c-35715560b48c.jpeg"
+                src="https://storage.googleapis.com/gemini-studio-main-images/a6c50711-8e7c-4217-a066-1049b49b2513.jpeg"
                 alt="Canudo Detector de Metanol SafeSip"
                 width={600}
                 height={600}
@@ -233,7 +234,7 @@ export default function CheckoutPage() {
                     <div className="space-y-4">
                          <div className="flex items-center justify-between border-b pb-2">
                             <div className="flex items-center gap-3">
-                                <Image src="https://storage.googleapis.com/gemini-studio-main-images/343c9842-8356-4299-813c-35715560b48c.jpeg" width={40} height={40} alt="SafeSip" className="rounded" />
+                                <Image src="https://storage.googleapis.com/gemini-studio-main-images/a6c50711-8e7c-4217-a066-1049b49b2513.jpeg" width={40} height={40} alt="SafeSip" className="rounded" />
                                 <span className="font-medium">Canudo Detector de Metanol — SafeSip</span>
                             </div>
                             <span className="font-bold">R$ 0,00</span>
