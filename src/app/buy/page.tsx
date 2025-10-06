@@ -16,7 +16,7 @@ import { generatePixPayment, checkPixStatus } from '@/app/actions';
 export default function CheckoutPage() {
   const [cep, setCep] = useState('');
   const [shippingCost, setShippingCost] = useState<number | null>(null);
-  const [address, setAddress] = useState({ street: '', city: '', state: '', number: '', complement: '' });
+  const [address, setAddress] = useState({ street: '', city: '', state: '', neighborhood: '', number: '', complement: '' });
   const [error, setError] = useState<string | null>(null);
   const [showFreebieAlert, setShowFreebieAlert] = useState(false);
   const [paymentStep, setPaymentStep] = useState<'form' | 'pix' | 'success'>('form');
@@ -109,7 +109,7 @@ export default function CheckoutPage() {
         if (data.erro) {
             setError('CEP não encontrado. Por favor, verifique o número digitado.');
             setShippingCost(null);
-            setAddress({ street: '', city: '', state: '', number: '', complement: '' });
+            setAddress({ street: '', city: '', state: '', neighborhood: '', number: '', complement: '' });
             return;
         }
 
@@ -135,7 +135,7 @@ export default function CheckoutPage() {
         }
 
         setShippingCost(cost);
-        setAddress(prev => ({ ...prev, street: data.logradouro, city: data.localidade, state: data.uf }));
+        setAddress(prev => ({ ...prev, street: data.logradouro, city: data.localidade, state: data.uf, neighborhood: data.bairro }));
 
     } catch (e: any) {
         setError(e.message || 'Ocorreu um erro ao calcular o frete.');
@@ -164,7 +164,7 @@ export default function CheckoutPage() {
         setIsLoading(false);
         return;
     }
-    const form = e.target as HTMLFormElement;
+    const form = e.target as HTMLFormEvent;
     const nameInput = form.elements.namedItem('name') as HTMLInputElement;
     const emailInput = form.elements.namedItem('email') as HTMLInputElement;
     const numberInput = form.elements.namedItem('address-number') as HTMLInputElement;
@@ -372,12 +372,16 @@ export default function CheckoutPage() {
                             </div>
                             {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
                             {shippingCost !== null && (
-                                <div className="mt-2 text-sm text-gray-600">{address.street}, {address.city} - {address.state}</div>
+                                <div className="mt-2 text-sm text-gray-600">{address.street} {address.city} - {address.state}</div>
                             )}
                             </div>
                             <div>
                             <Label htmlFor="address-street">Endereço</Label>
                             <Input id="address-street" placeholder="Rua, avenida..." value={address.street} onChange={e => setAddress({...address, street: e.target.value})} required/>
+                            </div>
+                             <div>
+                                <Label htmlFor="address-neighborhood">Bairro</Label>
+                                <Input id="address-neighborhood" name="address-neighborhood" placeholder="Seu bairro" value={address.neighborhood} onChange={e => setAddress({...address, neighborhood: e.target.value})} required/>
                             </div>
                             <div className="grid grid-cols-3 gap-4">
                             <div className="col-span-1">
@@ -386,15 +390,18 @@ export default function CheckoutPage() {
                             </div>
                             <div className="col-span-2">
                                 <Label htmlFor="address-complement">Complemento</Label>
-                                <Input id="address-complement" name="address-complement" placeholder="Apto, bloco, etc. (opcional)" />
+                                <Input id="address-complement" name="address-complement" placeholder="Apto, bloco, etc." />
                             </div>
+                            </div>
+                             <div>
+                                <Label htmlFor="address-reference">Ponto de Referência (opcional)</Label>
+                                <Input id="address-reference" name="address-reference" placeholder="Próximo a..." />
                             </div>
                             
                             <Button type="submit" size="lg" className="w-full text-lg font-bold text-white" style={{ backgroundColor: '#FF6B00' }} disabled={isLoading}>
                             {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                             Garanta já — Pague só o frete
                             </Button>
-                            <p className="text-center text-sm text-muted-foreground">Entrega estimada: 1–3 dias úteis. Pedido sujeito à disponibilidade do lote.</p>
                         </form>
                         ) : (
                             <div className="flex flex-col items-center gap-4 text-center">
@@ -465,3 +472,5 @@ export default function CheckoutPage() {
     </div>
   );
 }
+
+    
