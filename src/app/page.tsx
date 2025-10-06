@@ -8,6 +8,8 @@ import { Input } from '@/components/ui/input';
 import { ArrowUp, ArrowRight, Star, Feather, Zap, Cookie, Contrast, LayoutGrid, Search, Menu, Mic, Flame, ChevronDown, ChevronUp } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
+
 
 export default function LandingPage() {
   const footerLinks = {
@@ -70,7 +72,7 @@ export default function LandingPage() {
                 <Button variant="ghost" size="icon" className="md:hidden">
                   <Menu className="h-6 w-6 text-blue-600" />
                 </Button>
-                <span className="font-semibold text-lg text-gray-800">Ministério da Saúde</span>
+                <span className="font-semibold text-lg text-blue-600">Ministério da Saúde</span>
               </div>
               <div className="flex items-center gap-4">
                  <Mic className="h-5 w-5 text-blue-600 cursor-pointer hover:text-blue-800" />
@@ -200,7 +202,7 @@ export default function LandingPage() {
 
       <footer className="w-full bg-[#002a54] text-white py-12">
         <div className="container mx-auto px-4 md:px-6 relative">
-          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-[1fr_3fr] gap-8">
             <div>
               <Image
                 src="https://barra.sistema.gov.br/v1/assets/govbr.webp"
@@ -211,18 +213,22 @@ export default function LandingPage() {
               />
               <h3 className="font-bold mb-2 text-xl">SUS</h3>
             </div>
-            {Object.entries(footerLinks).map(([title, links]) => (
-              <div key={title}>
-                <h3 className="font-bold mb-4 text-xl">{title}</h3>
-                <ul className="space-y-2">
-                  {links.map((link) => (
-                    <li key={link}>
-                      <a href="#" className="text-sm hover:underline">{link}</a>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
+             <Accordion type="multiple" className="w-full">
+              {Object.entries(footerLinks).map(([title, links]) => (
+                <AccordionItem value={title} key={title}>
+                  <AccordionTrigger className="font-bold text-xl hover:no-underline">{title}</AccordionTrigger>
+                  <AccordionContent>
+                    <ul className="space-y-2 pt-2">
+                      {links.map((link) => (
+                        <li key={link}>
+                          <a href="#" className="text-sm hover:underline">{link}</a>
+                        </li>
+                      ))}
+                    </ul>
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
           <button className="absolute bottom-4 right-4 bg-blue-500 hover:bg-blue-600 text-white p-3 rounded-full shadow-lg">
             <ArrowUp className="h-6 w-6" />
@@ -241,3 +247,4 @@ export default function LandingPage() {
     </div>
   );
 }
+
