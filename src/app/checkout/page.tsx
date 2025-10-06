@@ -241,7 +241,7 @@ export default function CheckoutPage() {
               </AccordionItem>
               <AccordionItem value="item-2">
                 <AccordionTrigger>Quanto tempo para chegar?</AccordionTrigger>
-                <AccordionContent>3–7 dias úteis após confirmação do frete.</AccordionContent>
+                <AccordionContent>1–3 dias úteis após confirmação do frete.</AccordionContent>
               </AccordionItem>
               <AccordionItem value="item-3">
                 <AccordionTrigger>Como usar?</AccordionTrigger>
@@ -270,7 +270,7 @@ export default function CheckoutPage() {
                     <div className="space-y-4">
                          <div className="flex items-center justify-between border-b pb-2">
                             <div className="flex items-center gap-3">
-                                <Image src="https://informaparaiba.com.br/wp-content/uploads/2025/10/unnamed-13-scaled.jpg" width={40} height={40} alt="SafeSip" className="rounded object-cover" />
+                                <Image src="https://i.ibb.co/V4nMcjZ/SAFESIP.png" width={40} height={40} alt="SafeSip" className="rounded object-cover" />
                                 <span className="font-medium">Canudo Detector de Metanol — SafeSip</span>
                             </div>
                             <span className="font-bold">R$ 0,00</span>
@@ -327,7 +327,7 @@ export default function CheckoutPage() {
                       {isLoading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : null}
                       Garanta já — Pague só o frete
                     </Button>
-                    <p className="text-center text-sm text-muted-foreground">Entrega estimada: 3–7 dias úteis. Pedido sujeito à disponibilidade do lote.</p>
+                    <p className="text-center text-sm text-muted-foreground">Entrega estimada: 1–3 dias úteis. Pedido sujeito à disponibilidade do lote.</p>
                   </form>
                  ) : (
                     <div className="flex flex-col items-center gap-4 text-center">
