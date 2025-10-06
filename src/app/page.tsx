@@ -30,7 +30,7 @@ export default function LandingPage() {
 
   return (
     <div className="flex flex-col min-h-screen bg-background text-foreground">
-      <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+      <header className="w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 items-center">
           <a href="https://www.gov.br/pt-br" className="flex items-center gap-2">
               <Image
@@ -63,7 +63,7 @@ export default function LandingPage() {
       </header>
 
       <main className="flex-1">
-        <section className="w-full py-4 border-b">
+        <section className="w-full py-4 border-b sticky top-0 z-40 bg-background shadow-sm">
           <div className="container px-4 md:px-6">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
@@ -107,7 +107,7 @@ export default function LandingPage() {
                             allowFullScreen
                             title="VENENO INVISÍVEL"
                           ></iframe>
-                           <div className="absolute top-2 right-2 w-16 h-12 bg-black z-10"></div>
+                           <div className="absolute top-2 right-2 w-16 h-12 bg-black z-10 cursor-default"></div>
                         </div>
                       <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl">
                         VENENO INVISÍVEL: Saiba Onde Fazer o Teste Gratuito e Conheça o 'Canudo de Defesa' Que Você Precisa Ter JÁ!
