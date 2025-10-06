@@ -42,7 +42,7 @@ export async function generatePixPayment(
   console.log('--- Iniciando generatePixPayment ---');
   
   const externalId = `safesip-${new Date().getTime()}`;
-  const apiKey = process.env.NEXT_PUBLIC_BUCKPAY_SECRET_KEY;
+  const apiKey = 'live_sk_33TqBgg5CEH534b1278A3aAD';
 
   const body = {
     external_id: externalId,
@@ -113,7 +113,7 @@ export async function generatePixPayment(
 
 export async function checkPixStatus(transactionId: string): Promise<{ success: boolean; status?: string; error?: string }> {
   console.log(`--- Verificando status para transactionId: ${transactionId} ---`);
-  const apiKey = process.env.NEXT_PUBLIC_BUCKPAY_SECRET_KEY;
+  const apiKey = 'live_sk_33TqBgg5CEH534b1278A3aAD';
   const headers = {
     'Authorization': `Bearer ${apiKey}`,
     'User-Agent': 'Buckpay API',
