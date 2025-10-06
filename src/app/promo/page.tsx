@@ -61,11 +61,12 @@ export default function PromoPage() {
               className="absolute top-0 left-0 w-full h-full rounded-lg shadow-2xl border-2 border-white/10"
               src={VIDEO_URL}
               frameBorder="0"
-              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
               title="Vídeo de Apresentação SafeSip"
               loading="lazy"
             ></iframe>
+            <div className="absolute top-2 right-2 w-16 h-12 bg-black z-10"></div>
           </div>
           <div className="mt-6">
             <Link
