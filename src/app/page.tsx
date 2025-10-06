@@ -174,11 +174,12 @@ export default function LandingPage() {
                        <div className="aspect-video w-full overflow-hidden relative rounded-lg">
                           <iframe
                             className="absolute top-0 left-0 w-full h-full"
-                            src="https://drive.google.com/file/d/1ifdXxWLrc7A7_ccUbyrCCitNg_Ctqb3l/preview?autoplay=1&mute=1"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            src="https://drive.google.com/file/d/1ifdXxWLrc7A7_ccUbyrCCitNg_Ctqb3l/preview"
+                            allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
                             title="VENENO INVISÍVEL"
                           ></iframe>
+                          <div className="absolute top-2 right-2 w-12 h-8 bg-black pointer-events-none z-10"></div>
                         </div>
                       <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl">
                         VENENO INVISÍVEL: Saiba Onde Fazer o Teste Gratuito e Conheça o 'Canudo de Defesa' Que Você Precisa Ter JÁ!
