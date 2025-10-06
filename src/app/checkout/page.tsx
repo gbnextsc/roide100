@@ -25,6 +25,7 @@ export default function CheckoutPage() {
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const pollingIntervalRef = useRef<NodeJS.Timeout | null>(null);
+  const productPrice = 0.00;
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -110,7 +111,7 @@ export default function CheckoutPage() {
         setAddress({ street: '', city: '', state: '', number: '', complement: '' });
       } else {
         setAddress(prev => ({ ...prev, street: data.logradouro, city: data.localidade, state: data.uf }));
-        setShippingCost(6.00);
+        setShippingCost(47.90);
       }
     } catch (e) {
       setError('Ocorreu um erro ao calcular o frete.');
@@ -162,7 +163,8 @@ export default function CheckoutPage() {
     };
 
     const buyer = { name: nameInput.value, email: emailInput.value };
-    const amountInCents = Math.round(6.00 * 100);
+    const totalAmount = productPrice + shippingCost;
+    const amountInCents = Math.round(totalAmount * 100);
 
     try {
         const result = await generatePixPayment(buyer, amountInCents, fullAddress);
@@ -282,7 +284,7 @@ export default function CheckoutPage() {
                                 <Image src="https://i.ibb.co/V4nMcjZ/SAFESIP.png" width={40} height={40} alt="SafeSip" className="rounded object-cover" />
                                 <span className="font-medium">Canudo Detector de Metanol — SafeSip</span>
                             </div>
-                            <span className="font-bold">R$ 0,00</span>
+                            <span className="font-bold">R$ {productPrice.toFixed(2)}</span>
                         </div>
                         <div className="flex items-center justify-between">
                             <span className="text-muted-foreground">Custo do frete</span>
@@ -342,7 +344,7 @@ export default function CheckoutPage() {
                     <div className="flex flex-col items-center gap-4 text-center">
                        <h3 className="text-xl font-bold">Pague com Pix para finalizar</h3>
                        <p className="text-sm text-muted-foreground">Escaneie o QR Code ou copie o código. O pedido será confirmado automaticamente após o pagamento.</p>
-                        {pixData && (
+                        {pixData && shippingCost !== null && (
                            <>
                             <Image
                                 src={`data:image/png;base64,${pixData.qrcode_base64}`}
@@ -353,7 +355,7 @@ export default function CheckoutPage() {
                             />
                              <div className="text-center">
                                 <p className="text-sm text-muted-foreground">Valor total:</p>
-                                <p className="text-2xl font-bold">{`R$ 6.00`}</p>
+                                <p className="text-2xl font-bold">{`R$ ${(productPrice + shippingCost).toFixed(2)}`}</p>
                               </div>
                            </>
                         )}
