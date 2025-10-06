@@ -274,7 +274,7 @@ export default function LandingPage() {
 
       <footer className="w-full bg-[#002a54] text-white py-12">
         <div className="container mx-auto px-4 md:px-6 relative">
-          <div className="grid grid-cols-2 md:grid-cols-6 gap-8">
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8">
             <div>
               <Image
                 src="https://barra.sistema.gov.br/v1/assets/govbr.webp"
