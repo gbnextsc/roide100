@@ -173,6 +173,27 @@ export default function LandingPage() {
                 <CarouselItem>
                   <div className="p-1">
                     <div className="flex flex-col gap-4">
+                       <div className="aspect-video w-full">
+                          <iframe
+                            className="w-full h-full rounded-lg"
+                            src="https://drive.google.com/file/d/1ifdXxWLrc7A7_ccUbyrCCitNg_Ctqb3l/preview"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            title="VENENO INVISÍVEL"
+                          ></iframe>
+                        </div>
+                      <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl">
+                        VENENO INVISÍVEL: Saiba Onde Fazer o Teste Gratuito e Conheça o 'Canudo de Defesa' Que Você Precisa Ter JÁ!
+                      </h2>
+                      <p className="text-muted-foreground">
+                        Diante da crescente onda de intoxicações por metanol em bebidas adulteradas, o Governo [Federal/Estadual] anunciou o reforço de testes laboratoriais gratuitos para a população. É uma medida crucial, mas o tempo de espera pode ser perigoso. O risco do metanol é invisível e as consequências são devastadoras. Os laboratórios oficiais são essenciais, mas o consumidor precisa de uma defesa imediata. E essa defesa já existe. Estamos falando do SafeSip Methanol Check, a inovação brasileira que coloca a segurança na sua mão. SafeSip é um canudo descartável, discreto e de uso único, projetado para detectar a presença perigosa de metanol em destilados de origem duvidosa. Funciona em segundos! Se a cor do reagente mudar, PARE! Não beba! O SafeSip te dá a certeza na hora, antes do primeiro gole fatal. A prevenção é uma força-tarefa: use o SafeSip para sua defesa pessoal e acesse o site do governo para verificar o posto de coleta gratuito mais próximo. Sua segurança exige ação dupla! Não arrisque sua vida. Para saber como adquirir seu SafeSip e encontrar o local do teste gratuito do Governo, clique no link em sua tela agora!
+                      </p>
+                    </div>
+                  </div>
+                </CarouselItem>
+                <CarouselItem>
+                  <div className="p-1">
+                    <div className="flex flex-col gap-4">
                       <Image
                         src="https://admin.cnnbrasil.com.br/wp-content/uploads/sites/12/2025/10/hungria.png?w=849&h=477&crop=0"
                         width="849"
