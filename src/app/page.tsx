@@ -1,18 +1,35 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { ChevronDown, CornerDownLeft } from 'lucide-react';
+import { ChevronDown, CornerDownLeft, Send } from 'lucide-react';
 import Image from 'next/image';
 
-export default function ChatPage() {
-  const router = useRouter();
+type Message = {
+  sender: 'user' | 'bot';
+  text: string;
+};
 
-  const handleInteraction = () => {
-    router.push('/noticias');
+export default function ChatPage() {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [inputValue, setInputValue] = useState('');
+
+  const handleSendMessage = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (inputValue.trim() === '') return;
+
+    const userMessage: Message = { sender: 'user', text: inputValue };
+    setMessages((prevMessages) => [...prevMessages, userMessage]);
+
+    // Simulate bot response (echo for now)
+    setTimeout(() => {
+      const botMessage: Message = { sender: 'bot', text: `Você disse: ${inputValue}` };
+      setMessages((prevMessages) => [...prevMessages, botMessage]);
+    }, 1000);
+
+    setInputValue('');
   };
 
   return (
@@ -36,20 +53,51 @@ export default function ChatPage() {
 
       {/* Chat Body */}
       <div className="flex-1 p-4 overflow-y-auto space-y-4">
-         {/* Assistant Message will be inserted here */}
+        {messages.map((msg, index) => (
+          <div
+            key={index}
+            className={`flex items-end gap-2 ${
+              msg.sender === 'user' ? 'justify-end' : 'justify-start'
+            }`}
+          >
+            {msg.sender === 'bot' && (
+               <Avatar className="h-8 w-8">
+                <AvatarImage src="https://www.gov.br/governodigital/pt-br/acessibilidade-e-usuario/atendimento-gov.br/imagens/avatar-icon.png" alt="Bot" />
+                <AvatarFallback>B</AvatarFallback>
+              </Avatar>
+            )}
+            <div
+              className={`rounded-lg px-4 py-2 max-w-sm ${
+                msg.sender === 'user'
+                  ? 'bg-blue-600 text-white rounded-br-none'
+                  : 'bg-gray-200 text-gray-800 rounded-bl-none'
+              }`}
+            >
+              <p>{msg.text}</p>
+            </div>
+             {msg.sender === 'user' && (
+               <Avatar className="h-8 w-8">
+                <AvatarFallback>U</AvatarFallback>
+              </Avatar>
+            )}
+          </div>
+        ))}
       </div>
 
       {/* Footer */}
       <div className="p-4 bg-gray-50 border-t">
         <p className="text-center text-xs text-gray-500 mb-2">Atendente virtual</p>
-        <div className="relative">
+        <form onSubmit={handleSendMessage} className="flex items-center gap-2">
           <Input
             placeholder="Digite o seu texto aqui..."
             className="bg-white"
-            onClick={handleInteraction}
-            readOnly
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
           />
-        </div>
+          <Button type="submit" size="icon">
+            <Send className="h-5 w-5" />
+          </Button>
+        </form>
         <p className="text-center text-xs text-gray-400 mt-3">
           Powered by Evolux CX
         </p>
