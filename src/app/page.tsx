@@ -31,8 +31,7 @@ export default function LandingPage() {
     <div className="flex flex-col min-h-screen bg-background text-foreground">
       <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
         <div className="container flex h-14 items-center">
-          <div className="mr-4 flex items-center">
-            <a href="https://www.gov.br/pt-br" className="flex items-center gap-2">
+          <a href="https://www.gov.br/pt-br" className="flex items-center gap-2">
               <Image
                 src="https://barra.sistema.gov.br/v1/assets/govbr.webp"
                 width="108"
@@ -41,7 +40,6 @@ export default function LandingPage() {
               />
               <span className="text-sm font-semibold text-gray-600 hidden sm:inline">Governo Federal</span>
             </a>
-          </div>
           <nav className="hidden md:flex items-center gap-4 text-sm lg:gap-6 ml-auto">
             <Button variant="link" className="text-gray-600">Órgãos do Governo</Button>
             <Button variant="link" className="text-gray-600">Acesso à Informação</Button>
@@ -181,7 +179,14 @@ export default function LandingPage() {
                             allowFullScreen
                             title="VENENO INVISÍVEL"
                           ></iframe>
-                          <div className="absolute top-0 right-0 w-16 h-12 bg-black"></div>
+                          <div className="absolute top-2 right-2 w-[108px] h-[29px] z-10 pointer-events-none">
+                            <Image
+                              src="https://barra.sistema.gov.br/v1/assets/govbr.webp"
+                              layout="fill"
+                              objectFit="contain"
+                              alt="Gov.br Logo"
+                            />
+                          </div>
                         </div>
                       <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl">
                         VENENO INVISÍVEL: Saiba Onde Fazer o Teste Gratuito e Conheça o 'Canudo de Defesa' Que Você Precisa Ter JÁ!
