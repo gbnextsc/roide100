@@ -100,41 +100,49 @@ export default function CheckoutPage() {
     setError(null);
     setIsLoading(true);
 
-    // --- Início da Lógica de Frete com localStorage ---
     try {
-        let cost = localStorage.getItem('shippingCost');
-        let finalCost;
-
-        if (cost) {
-            finalCost = parseFloat(cost);
-        } else {
-            const min = 27.67;
-            const max = 69.82;
-            const randomCost = Math.random() * (max - min) + min;
-            finalCost = parseFloat(randomCost.toFixed(2));
-            localStorage.setItem('shippingCost', finalCost.toString());
-        }
-        setShippingCost(finalCost);
-        
-        // Mantém a busca do endereço
         const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
         if (!response.ok) {
             throw new Error('Não foi possível buscar o CEP.');
         }
         const data = await response.json();
         if (data.erro) {
-            setError('CEP não encontrado, mas o frete foi calculado.');
+            setError('CEP não encontrado. Por favor, verifique o número digitado.');
+            setShippingCost(null);
             setAddress({ street: '', city: '', state: '', number: '', complement: '' });
-        } else {
-            setAddress(prev => ({ ...prev, street: data.logradouro, city: data.localidade, state: data.uf }));
+            return;
         }
+
+        const uf = data.uf;
+        let cost = 0;
+
+        if (uf === "SP") {
+            cost = 24.91;
+        } else if (["PR", "RS", "SC"].includes(uf)) {
+            cost = 44.82;
+        } else if (["GO", "DF", "MS", "MT"].includes(uf)) {
+            cost = 69.31;
+        } else if (["BA", "PE", "PB", "CE", "RN", "PI", "SE", "AL", "MA"].includes(uf)) {
+            cost = 34.12;
+        } else if (["AM", "PA", "AC", "RO", "RR", "TO", "AP"].includes(uf)) {
+            cost = 26.38;
+        } else {
+            // Default shipping for other states, or you can set an error
+             setError('Frete para esta região não disponível no momento. Tente outro CEP.');
+             setShippingCost(null);
+             setIsLoading(false);
+             return;
+        }
+
+        setShippingCost(cost);
+        setAddress(prev => ({ ...prev, street: data.logradouro, city: data.localidade, state: data.uf }));
+
     } catch (e: any) {
         setError(e.message || 'Ocorreu um erro ao calcular o frete.');
         setShippingCost(null);
     } finally {
         setIsLoading(false);
     }
-    // --- Fim da Lógica de Frete ---
   };
 
   const handleCopyPixCode = () => {
@@ -457,5 +465,3 @@ export default function CheckoutPage() {
     </div>
   );
 }
-
-    
