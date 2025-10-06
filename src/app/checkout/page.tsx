@@ -206,7 +206,7 @@ export default function CheckoutPage() {
               <AccordionItem value="item-2">
                 <AccordionTrigger>Quanto tempo para chegar?</AccordionTrigger>
                 <AccordionContent>3–7 dias úteis após confirmação do frete.</AccordionContent>
-              </A'cordionItem>
+              </AccordionItem>
               <AccordionItem value="item-3">
                 <AccordionTrigger>Como usar?</AccordionTrigger>
                 <AccordionContent>Encoste o canudo na bebida, aguarde 10s e compare com a escala de cor inclusa.</AccordionContent>
