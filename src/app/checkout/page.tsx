@@ -160,8 +160,8 @@ export default function CheckoutPage() {
         <div className="flex flex-col gap-8 text-white">
            <div className="relative">
              <Image
-                src="https://images.unsplash.com/photo-1618641979920-73764b85d383?q=80&w=600&auto=format&fit=crop"
-                alt="Canudo Detector de Metanol SafeSip"
+                src="https://informaparaiba.com.br/wp-content/uploads/2025/10/unnamed-13-scaled.jpg"
+                alt="Canudos de teste de metanol"
                 width={600}
                 height={600}
                 className="rounded-lg object-cover w-full shadow-2xl"
@@ -233,7 +233,7 @@ export default function CheckoutPage() {
                     <div className="space-y-4">
                          <div className="flex items-center justify-between border-b pb-2">
                             <div className="flex items-center gap-3">
-                                <Image src="https://images.unsplash.com/photo-1618641979920-73764b85d383?q=80&w=80&auto=format&fit=crop" width={40} height={40} alt="SafeSip" className="rounded" />
+                                <Image src="https://informaparaiba.com.br/wp-content/uploads/2025/10/unnamed-13-scaled.jpg" width={40} height={40} alt="SafeSip" className="rounded object-cover" />
                                 <span className="font-medium">Canudo Detector de Metanol — SafeSip</span>
                             </div>
                             <span className="font-bold">R$ 0,00</span>
@@ -342,5 +342,3 @@ export default function CheckoutPage() {
     </div>
   );
 }
-
-    
