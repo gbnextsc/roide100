@@ -221,18 +221,6 @@ export default function CheckoutPage() {
                     </ul>
                 </div>
            </div>
-
-           <div className="space-y-4">
-                <Card className="bg-white/10 border-white/20 text-white">
-                    <CardHeader className="flex-row items-center gap-4">
-                        <Image src="https://i.pravatar.cc/150?u=mariana" width={50} height={50} alt="Mariana" className="rounded-full" />
-                        <div>
-                             <CardTitle className="text-base">“Usei antes de sair pra uma festa — me salvou. Recomendo.”</CardTitle>
-                             <CardDescription className="text-white/80">Mariana, 34, SP</CardDescription>
-                        </div>
-                    </CardHeader>
-                </Card>
-           </div>
            
            <Accordion type="single" collapsible className="w-full text-white">
               <AccordionItem value="item-1">
