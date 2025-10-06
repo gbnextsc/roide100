@@ -173,9 +173,9 @@ export default function LandingPage() {
                 <CarouselItem>
                   <div className="p-1">
                     <div className="flex flex-col gap-4">
-                       <div className="aspect-video w-full">
+                       <div className="aspect-video w-full overflow-hidden relative rounded-lg">
                           <iframe
-                            className="w-full h-full rounded-lg"
+                            className="absolute -top-12 left-0 w-full h-[calc(100%_+_48px)]"
                             src="https://drive.google.com/file/d/1ifdXxWLrc7A7_ccUbyrCCitNg_Ctqb3l/preview"
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                             allowFullScreen
