@@ -7,7 +7,7 @@ import React, { useEffect, useRef } from 'react';
 
 const VIDEO_URL = "https://drive.google.com/file/d/1egMvBOIyQBfC0fm8FaZ66vPbi9nbMHaf/preview";
 const CHECKOUT_URL = "/checkout";
-const SELO_URL = "https://firebasestorage.googleapis.com/v0/b/safesip-2bf33.appspot.com/o/selo-recomendado.png?alt=media&token=05335555-4309-4876-96b6-a83d73cb6956"; // Optional
+const SELO_URL = "https://barra.sistema.gov.br/v1/assets/govbr.webp";
 
 export default function PromoPage() {
   const ctaRef = useRef<HTMLAnchorElement>(null);
@@ -110,7 +110,7 @@ export default function PromoPage() {
             <img
               src={SELO_URL}
               alt="Selo de recomendação"
-              className="h-24 w-24 object-contain"
+              className="h-auto w-48 object-contain"
               loading="lazy"
             />
             <p className="text-lg font-semibold">Recomendado por profissionais da saúde.</p>
