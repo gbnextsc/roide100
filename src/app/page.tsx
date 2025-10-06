@@ -67,9 +67,14 @@ export default function ChatPage() {
     setIsBotTyping(true);
 
     setTimeout(async () => {
+      const lowerCaseMessage = userMessage.toLowerCase();
+      const affirmativeAnswers = ['sim', 'ss', 's', 'quero', 'claro', 'pode', 'aceito'];
+      const negativeAnswers = ['não', 'nao', 'n', 'nao aceito', 'não aceito'];
+
+
       switch (conversationState) {
         case 'awaiting_initial_answer':
-          if (userMessage.toLowerCase().includes('sim')) {
+          if (affirmativeAnswers.some(ans => lowerCaseMessage.includes(ans))) {
             addMessage('bot', 'Ótimo! Vamos garantir seu teste gratuito para identificar metanol em bebidas. Vou precisar de alguns dados básicos para reservar.');
             setTimeout(() => {
               addMessage('bot', 'Para reservar um teste, qual é o seu CPF? (ex.: 000.000.000-00)');
@@ -129,7 +134,7 @@ export default function ChatPage() {
             break;
 
         case 'awaiting_previous_rescue':
-            if (userMessage.toLowerCase().includes('sim')) {
+            if (affirmativeAnswers.some(ans => lowerCaseMessage.includes(ans))) {
                 addMessage('bot', 'Entendido! O sistema vai confirmar seu histórico. Caso já tenha retirado um teste, não será necessário um novo resgate.');
             } else {
                 addMessage('bot', 'Perfeito, seu CPF está livre para um novo cadastro. Vamos finalizar sua solicitação.');
@@ -141,7 +146,7 @@ export default function ChatPage() {
             break;
         
         case 'awaiting_consent':
-            if (userMessage.toLowerCase().includes('aceito')) {
+            if (affirmativeAnswers.some(ans => lowerCaseMessage.includes(ans))) {
                 addMessage('bot', 'Obrigado pelo consentimento. Suas informações serão tratadas conforme a Lei Geral de Proteção de Dados (Lei nº 13.709/2018).');
                 setTimeout(() => {
                     addMessage('bot', '🎉 Tudo pronto! Seu teste gratuito de metanol foi reservado com sucesso.');
